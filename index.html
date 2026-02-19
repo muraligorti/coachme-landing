@@ -179,7 +179,7 @@
       <p class="text-center text-sm text-text2">No account? <a href="#" onclick="showTab('register');return false;" class="text-accent font-semibold">Register here</a></p>
     </form>
     <div id="regSuccess" class="hidden text-center py-8"><div class="text-5xl mb-4">&#10004;</div><h3 class="text-2xl font-black text-text0 mb-2">Welcome to CoachMe!</h3><p class="text-text2 mb-6">Account created. Login now.</p><button onclick="showTab('login')" class="px-8 py-3 bg-accent text-black rounded-xl font-bold">Login Now</button></div>
-    <div id="loginSuccess" class="hidden text-center py-8"><div class="text-5xl mb-4">&#128075;</div><h3 class="text-2xl font-black text-text0 mb-2" id="welcomeMsg">Welcome back!</h3><p class="text-text2 mb-6">Redirecting to dashboard...</p><a href="https://coachfront49992.z29.web.core.windows.net" id="dashboardLink" class="px-8 py-3 bg-accent text-black rounded-xl font-bold">Go to Dashboard &rarr;</a></div>
+    <div id="loginSuccess" class="hidden text-center py-8"><div class="text-5xl mb-4">&#128075;</div><h3 class="text-2xl font-black text-text0 mb-2" id="welcomeMsg">Welcome back!</h3><p class="text-text2 mb-6">Redirecting to dashboard...</p><a href="#" id="dashboardLink" onclick="window.location.href=DASHBOARD" class="px-8 py-3 bg-accent text-black rounded-xl font-bold">Go to Dashboard &rarr;</a></div>
   </div>
 </div>
 </section>
@@ -187,8 +187,10 @@
 <footer class="bg-bg0 text-text3 py-12 border-t border-border"><div class="max-w-7xl mx-auto px-6 text-center text-sm">&copy; 2026 CoachMe.life — Built in India, for coaches of every kind.</div></footer>
 
 <script>
-var API='https://coach-api-1770519048.azurewebsites.net/api/v1';
-var DASHBOARD='https://coachfront49992.z29.web.core.windows.net';
+var API_HOSTS=['https://coach-api-1770519048.azurewebsites.net/api/v1','https://coach-api-1770519048.azurewebsites.net/api/v1'];
+var API=API_HOSTS[0];
+var DASH_HOSTS=['https://coachfront49992.z29.web.core.windows.net','https://coachfront49992.z29.web.core.windows.net'];
+var DASHBOARD=DASH_HOSTS[0];
 
 function openInterest(cid,name,type){document.getElementById('intCoachId').value=cid;document.getElementById('intType').value=type;document.getElementById('interestTitle').textContent=type==='callback'?'Request Callback':"I'm Interested in "+name;document.getElementById('interestSubtitle').textContent=name+' will contact you.';document.getElementById('interestForm').classList.remove('hidden');document.getElementById('interestSuccess').classList.add('hidden');document.getElementById('interestModal').classList.remove('hidden');document.body.style.overflow='hidden'}
 function closeInterest(){document.getElementById('interestModal').classList.add('hidden');document.body.style.overflow=''}
