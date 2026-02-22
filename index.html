@@ -3,208 +3,846 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CoachMe - Your Coaching Business, Simplified</title>
-<meta name="description" content="CoachMe is the all-in-one platform for coaches. Schedule, track, get paid.">
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script>tailwind.config={theme:{extend:{fontFamily:{main:['Outfit','sans-serif']},colors:{bg0:'#0c0f14',bg1:'#12161e',bg2:'#191f2b',bg3:'#212938',border:'#2a3347',accent:'#e8a838',accentHover:'#d49a30',emerald:'#34d399',red:'#f87171',yellow:'#fbbf24',blue:'#60a5fa',text0:'#f4f0eb',text1:'#c8c2b8',text2:'#8a8477',text3:'#5e5a52'}}}}</script>
+<title>CoachFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Outfit',sans-serif;background:#0c0f14;color:#f4f0eb}
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-.fade-up{animation:fadeUp .8s ease-out forwards;opacity:0}.fade-d1{animation-delay:.1s}.fade-d2{animation-delay:.2s}.fade-d3{animation-delay:.3s}
-.cat-btn{transition:all .2s}.cat-btn.active{background:#e8a838;color:#000;border-color:#e8a838}
-.glow{box-shadow:0 0 40px rgba(232,168,56,.15)}
+:root{--bg-0:#0c0f14;--bg-1:#12161e;--bg-2:#191f2b;--bg-3:#212938;--border:#2a3347;--border-light:#364054;--accent:#e8a838;--green:#34d399;--red:#f87171;--yellow:#fbbf24;--blue:#60a5fa;--text-0:#f4f0eb;--text-1:#c8c2b8;--text-2:#8a8477;--text-3:#5e5a52;--font:'Outfit',sans-serif;--r-lg:14px;--r-md:10px;--r-sm:7px}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--font);background:var(--bg-0);color:var(--text-0);display:flex;min-height:100vh}
+.rail{width:68px;background:var(--bg-1);border-right:1px solid var(--border);height:100vh;position:fixed;display:flex;flex-direction:column;align-items:center;padding:14px 0;gap:2px;z-index:10;overflow-y:auto}
+.rail button{width:48px;padding:6px 0;border:none;background:transparent;color:var(--text-3);border-radius:10px;cursor:pointer;font-size:16px;transition:.2s;display:flex;flex-direction:column;align-items:center;gap:2px}
+.rail button span{font-size:8px;font-weight:600}
+.rail button:hover{background:var(--bg-3)}.rail button.active{background:rgba(232,168,56,.12);color:var(--accent)}
+.rail .logo{width:36px;height:36px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#000;margin-bottom:8px;flex-shrink:0}
+.stage{margin-left:68px;flex:1;padding:16px 20px;max-width:1400px}
+.topbar{height:52px;background:var(--bg-1);border:1px solid var(--border);border-radius:var(--r-lg);display:flex;align-items:center;justify-content:space-between;padding:0 16px;margin-bottom:14px}
+.topbar h2{font-size:15px;font-weight:700}.topbar .sub{font-size:11px;color:var(--text-2);margin-left:8px}
+.card{background:var(--bg-1);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px;margin-bottom:10px}
+.card-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.btn{padding:6px 12px;border-radius:var(--r-sm);border:1px solid var(--border-light);background:var(--bg-3);color:var(--text-0);font-size:11px;cursor:pointer;font-family:var(--font);transition:.15s}
+.btn:hover{border-color:var(--text-2)}.btn-accent{background:var(--accent);border-color:var(--accent);color:#000;font-weight:700}
+.btn-accent:hover{background:#d49a30}.btn-sm{padding:3px 8px;font-size:10px}
+.btn-red{border-color:var(--red);color:var(--red)}.btn-green{border-color:var(--green);color:var(--green)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}
+.stat{text-align:center;padding:12px;cursor:pointer;transition:.15s;border-radius:var(--r-md)}.stat:hover{background:var(--bg-2)}.stat h3{font-size:26px;font-weight:800;margin-bottom:2px}.stat p{font-size:11px;color:var(--text-2)}
+input,select,textarea{background:var(--bg-2);border:1px solid var(--border);color:var(--text-0);border-radius:var(--r-sm);padding:7px 10px;font-size:12px;font-family:var(--font);width:100%}
+input:focus,select:focus{outline:none;border-color:var(--accent)}
+label{font-size:11px;color:var(--text-2);margin-bottom:3px;display:block}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.form-group{margin-bottom:8px}
+table{width:100%;font-size:12px;border-collapse:collapse}
+th{text-align:left;color:var(--text-3);font-size:10px;text-transform:uppercase;padding:8px 6px;border-bottom:1px solid var(--border)}
+td{padding:7px 6px;border-bottom:1px solid var(--bg-3)}
+.chip{display:inline-block;padding:4px 10px;border:1px solid var(--border);border-radius:20px;font-size:11px;cursor:pointer;color:var(--text-1);margin:2px;transition:.15s;user-select:none}
+.chip.active{border-color:var(--accent);color:var(--accent);background:rgba(232,168,56,.12)}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
+.badge-green{background:rgba(52,211,153,.15);color:var(--green)}.badge-red{background:rgba(248,113,113,.15);color:var(--red)}
+.badge-yellow{background:rgba(251,191,36,.15);color:var(--yellow)}.badge-blue{background:rgba(96,165,250,.15);color:var(--blue)}
+.badge-accent{background:rgba(232,168,56,.15);color:var(--accent)}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:100}
+.modal{background:var(--bg-1);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;width:90%;max-width:460px;max-height:80vh;overflow-y:auto}
+.modal h3{font-size:15px;margin-bottom:14px}
+.toast{position:fixed;bottom:20px;right:20px;padding:10px 18px;border-radius:var(--r-md);font-size:12px;z-index:200;animation:slideUp .3s}
+.toast-ok{background:var(--green);color:#000}.toast-err{background:var(--red);color:#fff}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.empty{text-align:center;padding:30px;color:var(--text-3);font-size:13px}
+.loading{text-align:center;padding:20px;color:var(--text-2);font-size:12px}
+.clickable{cursor:pointer;transition:.15s}.clickable:hover{background:var(--bg-2);border-radius:6px}
+/* Scheduler */
+.sched-wrap{display:grid;grid-template-columns:140px 1fr;gap:10px}
+.sched-sidebar .cli{background:var(--bg-3);border:1px solid var(--border-light);border-radius:6px;padding:6px 10px;margin-bottom:4px;font-size:11px;display:flex;align-items:center;gap:6px;cursor:grab}
+.cli.online{border-left:3px solid var(--blue)}.cli.offline{border-left:3px solid var(--green)}
+.cli-eye{margin-left:auto;cursor:pointer;opacity:.4;font-size:12px;transition:.15s;flex-shrink:0}.cli-eye:hover{opacity:1;color:var(--accent)}
+.sched-grid{display:grid;gap:4px;font-size:10px}
+.sched-hdr{text-align:center;font-weight:700;color:var(--text-1);font-size:11px;padding:4px}
+.sched-hdr.is-today{color:var(--accent);text-decoration:underline}
+.sched-hdr.is-holiday{color:var(--red);text-decoration:line-through}
+.sched-time{color:var(--text-3);padding:6px 4px 0;text-align:right;font-size:10px}
+.sched-time.now-hr{color:var(--accent);font-weight:700}
+.sched-cell{background:var(--bg-2);border:1px dashed var(--border);border-radius:6px;min-height:42px;padding:3px;position:relative;transition:.15s}
+.sched-cell.drag-over{border-color:var(--accent);background:rgba(232,168,56,.08)}
+.sched-cell.full{background:rgba(248,113,113,.12);border-color:var(--red);border-style:solid}
+.sched-cell.at-max{background:rgba(251,191,36,.06);border-color:var(--yellow)}
+.sched-cell.now-slot{box-shadow:inset 0 0 0 1px var(--accent)}
+.slot-cap{position:absolute;top:1px;right:3px;font-size:8px;color:var(--text-3);font-weight:700}
+.slot-cap.full{color:var(--red)}.slot-cap.at-max{color:var(--yellow)}
+.sched-evt{padding:4px 6px;border-radius:4px;font-size:10px;margin-bottom:2px;display:flex;justify-content:space-between;align-items:center}
+.sched-evt.online{background:rgba(96,165,250,.12);border-left:3px solid var(--blue);color:var(--blue)}
+.sched-evt.offline{background:rgba(52,211,153,.12);border-left:3px solid var(--green);color:var(--green)}
+.evt-main{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;flex:1;min-width:0}
+.evt-actions{display:flex;gap:1px;opacity:0;transition:.15s;flex-shrink:0}.sched-evt:hover .evt-actions{opacity:1}
+.evt-del{font-size:9px;color:var(--red);cursor:pointer;padding:2px 3px;border-radius:4px}.evt-del:hover{background:rgba(248,113,113,.2)}
+.evt-att{font-size:10px;cursor:pointer;padding:1px 4px;border-radius:4px;font-weight:800}
+.att-ok{color:var(--green)}.att-ok:hover{background:rgba(52,211,153,.2)}
+.att-no{color:var(--red)}.att-no:hover{background:rgba(248,113,113,.2)}
+.cancel-day-btn{font-size:9px;display:block;color:var(--text-3);cursor:pointer;text-align:center;margin-top:2px}.cancel-day-btn:hover{color:var(--red)}
+.date-nav{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.date-nav button{background:var(--bg-3);border:1px solid var(--border);color:var(--text-0);border-radius:6px;width:30px;height:30px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;font-family:var(--font)}
+.date-nav button:hover{border-color:var(--accent)}.date-nav .today-btn{padding:4px 10px;font-size:10px;width:auto}
+/* Panel */
+.cli-panel-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90;display:flex;justify-content:flex-end}
+.cli-panel{width:420px;max-width:90vw;height:100vh;background:var(--bg-1);border-left:1px solid var(--border);padding:20px;overflow-y:auto;animation:slideIn .2s ease-out}
+@keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+.cli-panel h3{font-size:15px;font-weight:700;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.cli-panel .tab-row{display:flex;gap:4px;margin-bottom:12px;background:var(--bg-0);border-radius:8px;padding:3px}
+.cli-panel .tab-btn{flex:1;padding:6px 0;text-align:center;font-size:11px;font-weight:600;border-radius:6px;cursor:pointer;color:var(--text-2);border:none;background:transparent;font-family:var(--font)}
+.cli-panel .tab-btn.active{background:var(--bg-3);color:var(--text-0);border:1px solid var(--border)}
+.sess-item{display:flex;align-items:center;justify-content:space-between;padding:8px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:11px}
+@media(max-width:768px){.rail{width:52px}.rail button span{display:none}.stage{margin-left:52px;padding:10px}.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.sched-wrap{grid-template-columns:1fr}}
+/* ── AI COMMAND BAR ────────────────── */
+.ai-fab{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#e07c24);color:#000;border:none;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(232,168,56,.4);z-index:999;display:flex;align-items:center;justify-content:center;transition:.3s}
+.ai-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(232,168,56,.6)}
+.ai-panel{position:fixed;bottom:0;right:0;width:440px;max-width:100vw;height:80vh;max-height:600px;background:var(--bg-1);border-left:1px solid var(--border);border-top:1px solid var(--border);border-radius:16px 0 0 0;z-index:1000;display:flex;flex-direction:column;box-shadow:-4px -4px 30px rgba(0,0,0,.3);animation:aiSlide .25s ease-out}
+@keyframes aiSlide{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.ai-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.ai-header h3{font-size:14px;margin:0;display:flex;align-items:center;gap:8px}
+.ai-messages{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.ai-msg{max-width:90%;padding:10px 14px;border-radius:12px;font-size:12px;line-height:1.5;animation:msgIn .2s ease-out}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ai-msg.user{align-self:flex-end;background:var(--accent);color:#000;border-radius:12px 12px 2px 12px}
+.ai-msg.ai{align-self:flex-start;background:var(--bg-2);color:var(--text-1);border-radius:12px 12px 12px 2px}
+.ai-msg.system{align-self:center;background:transparent;color:var(--text-3);font-size:10px;font-style:italic;padding:4px}
+.ai-msg .action-tag{display:inline-block;background:rgba(232,168,56,.15);color:var(--accent);padding:1px 6px;border-radius:4px;font-size:10px;font-weight:700;margin:2px 2px 2px 0}
+.ai-msg .action-ok{color:var(--green)}.ai-msg .action-err{color:var(--red)}
+.ai-typing{display:flex;gap:4px;padding:10px 14px;align-self:flex-start}
+.ai-typing span{width:6px;height:6px;border-radius:50%;background:var(--text-3);animation:typeDot .8s infinite}
+.ai-typing span:nth-child(2){animation-delay:.15s}.ai-typing span:nth-child(3){animation-delay:.3s}
+@keyframes typeDot{0%,80%{opacity:.3;transform:scale(.8)}40%{opacity:1;transform:scale(1.2)}}
+.ai-input-row{padding:10px 12px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:end}
+.ai-input-row textarea{flex:1;background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--text-1);font-size:12px;resize:none;font-family:inherit;min-height:20px;max-height:100px;outline:none;transition:.2s}
+.ai-input-row textarea:focus{border-color:var(--accent)}
+.ai-input-row button{width:36px;height:36px;border-radius:10px;background:var(--accent);color:#000;border:none;cursor:pointer;font-size:16px;flex-shrink:0;transition:.15s}
+.ai-input-row button:hover{background:#e0a030}
+.ai-input-row button:disabled{opacity:.4;cursor:not-allowed}
+.ai-suggestions{display:flex;flex-wrap:wrap;gap:4px;padding:0 12px 8px}
+.ai-sug{padding:4px 10px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;font-size:10px;color:var(--text-2);cursor:pointer;transition:.15s}
+.ai-sug:hover{border-color:var(--accent);color:var(--accent)}
 </style>
 </head>
 <body>
-
-<nav class="fixed top-0 w-full z-50 bg-bg0/95 backdrop-blur-md border-b border-border">
-<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-  <a href="/" class="flex items-center gap-2.5"><div class="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-black text-lg font-extrabold">C</div><span class="text-xl font-black tracking-tight text-text0">CoachMe</span></a>
-  <div class="hidden md:flex items-center gap-8">
-    <a href="#categories" class="text-sm font-semibold text-text2 hover:text-text0 transition">Categories</a>
-    <a href="#coaches" class="text-sm font-semibold text-text2 hover:text-text0 transition">Coaches</a>
-    <a href="#features" class="text-sm font-semibold text-text2 hover:text-text0 transition">Features</a>
-    <a href="#pricing" class="text-sm font-semibold text-text2 hover:text-text0 transition">Pricing</a>
-    <a href="#register" onclick="setTimeout(function(){showTab('login')},100)" class="text-sm font-semibold text-accent hover:text-accentHover">Login</a>
-    <a href="#register" class="px-5 py-2.5 bg-accent text-black rounded-xl text-sm font-bold hover:bg-accentHover transition">Register</a>
-  </div>
-</div>
-</nav>
-
-<!-- HERO -->
-<section class="relative min-h-screen flex items-center overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-br from-bg0 via-bg1 to-bg2"></div>
-<div class="absolute top-20 right-0 w-96 h-96 rounded-full bg-accent/5 blur-3xl"></div>
-<div class="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-blue/5 blur-3xl"></div>
-<div class="relative max-w-7xl mx-auto px-6 py-32 grid lg:grid-cols-2 gap-16 items-center">
-  <div>
-    <div class="fade-up inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-8 border border-accent/20">For every kind of coach — Fitness, Education, Music &amp; more</div>
-    <h1 class="fade-up fade-d1 text-5xl lg:text-7xl font-black leading-tight tracking-tight mb-6 text-text0">Your coaching<br>business,<br><span class="text-accent">simplified.</span></h1>
-    <p class="fade-up fade-d2 text-xl text-text2 leading-relaxed mb-10 max-w-lg">Schedule sessions, track progress, collect payments, and grow your client base — all from one AI-powered platform.</p>
-    <div class="fade-up fade-d3 flex flex-wrap gap-4">
-      <a href="#register" class="px-8 py-4 bg-accent text-black rounded-2xl text-lg font-bold hover:bg-accentHover shadow-xl shadow-accent/20 transition">Register as Coach &rarr;</a>
-      <a href="#coaches" class="px-8 py-4 border-2 border-border rounded-2xl text-lg font-bold text-text1 hover:border-text2 transition">Find a Coach</a>
-    </div>
-    <div class="fade-up flex items-center gap-4 mt-10 text-sm text-text3 flex-wrap">
-      <span>&#10003; Free to start</span><span>&#10003; AI Assistant</span><span>&#10003; Razorpay</span><span>&#10003; WhatsApp</span>
-    </div>
-  </div>
-  <div class="hidden lg:block">
-    <div class="bg-bg1 rounded-3xl shadow-2xl p-6 border border-border glow">
-      <div class="bg-gradient-to-r from-accent to-yellow rounded-2xl p-6 text-black mb-4">
-        <div class="text-sm opacity-70">Today's Sessions</div><div class="text-4xl font-black mt-1">8 Clients</div>
-        <div class="mt-3 bg-black/20 rounded-full h-2"><div class="bg-black/40 rounded-full h-2 w-3/4"></div></div>
-        <div class="text-sm mt-1 opacity-70">6 completed</div>
-      </div>
-      <div class="space-y-3">
-        <div class="flex items-center justify-between p-3 bg-bg2 rounded-xl border border-border"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-emerald text-black flex items-center justify-center font-bold">R</div><span class="font-medium text-sm text-text0">Rahul - 9 AM - Strength</span></div><span class="text-xs font-bold text-emerald bg-emerald/15 px-2 py-1 rounded-full">Done</span></div>
-        <div class="flex items-center justify-between p-3 bg-bg2 rounded-xl border border-border"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-blue text-black flex items-center justify-center font-bold">A</div><span class="font-medium text-sm text-text0">Ananya - 10:30 - Piano</span></div><span class="text-xs font-bold text-emerald bg-emerald/15 px-2 py-1 rounded-full">Done</span></div>
-        <div class="flex items-center justify-between p-3 bg-bg2 rounded-xl border border-border"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-accent text-black flex items-center justify-center font-bold">S</div><span class="font-medium text-sm text-text0">Sai - 12 PM - Math</span></div><span class="text-xs font-bold text-blue bg-blue/15 px-2 py-1 rounded-full">Next</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-</section>
-
-<!-- CATEGORIES -->
-<section id="categories" class="py-24 bg-bg1 border-t border-border">
-<div class="max-w-7xl mx-auto px-6">
-  <div class="text-center mb-16"><div class="text-sm font-bold text-accent uppercase tracking-widest mb-3">For every coach</div><h2 class="text-4xl lg:text-5xl font-black tracking-tight text-text0">One platform, every niche</h2></div>
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-    <div class="group p-6 rounded-2xl border-2 border-border hover:border-accent/50 hover:bg-bg2 text-center cursor-pointer transition-all" onclick="filterCoaches('fitness')"><div class="text-4xl mb-3">&#127947;</div><h3 class="font-bold text-sm text-text0">Fitness</h3><p class="text-xs text-text3 mt-1">Gym, Strength, HIIT</p></div>
-    <div class="group p-6 rounded-2xl border-2 border-border hover:border-blue/50 hover:bg-bg2 text-center cursor-pointer transition-all" onclick="filterCoaches('education')"><div class="text-4xl mb-3">&#128218;</div><h3 class="font-bold text-sm text-text0">Education</h3><p class="text-xs text-text3 mt-1">Tutoring, Test Prep</p></div>
-    <div class="group p-6 rounded-2xl border-2 border-border hover:border-accent/50 hover:bg-bg2 text-center cursor-pointer transition-all" onclick="filterCoaches('music')"><div class="text-4xl mb-3">&#127925;</div><h3 class="font-bold text-sm text-text0">Music</h3><p class="text-xs text-text3 mt-1">Piano, Guitar, Vocals</p></div>
-    <div class="group p-6 rounded-2xl border-2 border-border hover:border-yellow/50 hover:bg-bg2 text-center cursor-pointer transition-all" onclick="filterCoaches('yoga')"><div class="text-4xl mb-3">&#129495;</div><h3 class="font-bold text-sm text-text0">Yoga &amp; Wellness</h3><p class="text-xs text-text3 mt-1">Yoga, Meditation</p></div>
-    <div class="group p-6 rounded-2xl border-2 border-border hover:border-red/50 hover:bg-bg2 text-center cursor-pointer transition-all" onclick="filterCoaches('business')"><div class="text-4xl mb-3">&#128188;</div><h3 class="font-bold text-sm text-text0">Business</h3><p class="text-xs text-text3 mt-1">Startup, Leadership</p></div>
-    <div class="group p-6 rounded-2xl border-2 border-border hover:border-emerald/50 hover:bg-bg2 text-center cursor-pointer transition-all" onclick="filterCoaches('life')"><div class="text-4xl mb-3">&#127793;</div><h3 class="font-bold text-sm text-text0">Life Coaching</h3><p class="text-xs text-text3 mt-1">Career, Growth</p></div>
-  </div>
-</div>
-</section>
-
-<!-- COACHES -->
-<section id="coaches" class="py-24 bg-bg0">
-<div class="max-w-7xl mx-auto px-6">
-  <div class="text-center mb-8"><div class="text-sm font-bold text-accent uppercase tracking-widest mb-3">Top coaches</div><h2 class="text-4xl lg:text-5xl font-black tracking-tight text-text0">Train with the best</h2></div>
-  <div class="flex flex-wrap gap-2 justify-center mb-10" id="catFilters">
-    <button onclick="filterCoaches('all')" class="cat-btn active px-4 py-2 rounded-full border border-border text-sm font-semibold text-text1">All</button>
-    <button onclick="filterCoaches('fitness')" class="cat-btn px-4 py-2 rounded-full border border-border text-sm font-semibold text-text1">&#127947; Fitness</button>
-    <button onclick="filterCoaches('education')" class="cat-btn px-4 py-2 rounded-full border border-border text-sm font-semibold text-text1">&#128218; Education</button>
-    <button onclick="filterCoaches('music')" class="cat-btn px-4 py-2 rounded-full border border-border text-sm font-semibold text-text1">&#127925; Music</button>
-    <button onclick="filterCoaches('yoga')" class="cat-btn px-4 py-2 rounded-full border border-border text-sm font-semibold text-text1">&#129495; Yoga</button>
-    <button onclick="filterCoaches('business')" class="cat-btn px-4 py-2 rounded-full border border-border text-sm font-semibold text-text1">&#128188; Business</button>
-  </div>
-  <div id="coachGrid" class="grid md:grid-cols-3 gap-8">
-    <div class="coach-card bg-bg1 rounded-3xl border border-border p-8 hover:border-accent/30 hover:shadow-xl hover:shadow-accent/5 transition-all" data-cat="fitness"><div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald to-teal-500 text-black flex items-center justify-center text-3xl font-black mb-6">M</div><div class="inline-block px-2 py-0.5 rounded-full text-xs font-bold bg-emerald/15 text-emerald mb-2">Fitness</div><h3 class="text-xl font-bold text-text0">Murali Gorti</h3><div class="text-accent font-semibold text-sm mb-3">Strength &amp; Conditioning</div><p class="text-text2 text-sm mb-4">Certified trainer with 10+ years transforming lives through structured fitness programs.</p><div class="flex items-center justify-between pt-4 border-t border-border mb-4"><div><span class="text-yellow">&#9733;</span> <span class="font-bold text-text0">4.9</span> <span class="text-text3 text-sm">(127)</span></div><div class="text-text3 text-sm">Hyderabad</div></div><div class="flex gap-2"><button onclick="openInterest('demo','Murali Gorti','interest')" class="flex-1 py-2.5 bg-accent text-black rounded-xl text-sm font-bold hover:bg-accentHover transition">I'm Interested</button><button onclick="openInterest('demo','Murali Gorti','callback')" class="py-2.5 px-3 border-2 border-border rounded-xl text-sm font-bold text-text1 hover:border-text2 transition">&#128222;</button></div></div>
-    <div class="coach-card bg-bg1 rounded-3xl border border-border p-8 hover:border-accent/30 hover:shadow-xl hover:shadow-accent/5 transition-all" data-cat="yoga"><div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-400 to-purple-500 text-white flex items-center justify-center text-3xl font-black mb-6">P</div><div class="inline-block px-2 py-0.5 rounded-full text-xs font-bold bg-violet-400/15 text-violet-400 mb-2">Yoga</div><h3 class="text-xl font-bold text-text0">Priya Sharma</h3><div class="text-accent font-semibold text-sm mb-3">Yoga &amp; Mobility</div><p class="text-text2 text-sm mb-4">RYT-500 certified yoga instructor specializing in therapeutic yoga and injury recovery.</p><div class="flex items-center justify-between pt-4 border-t border-border mb-4"><div><span class="text-yellow">&#9733;</span> <span class="font-bold text-text0">4.8</span> <span class="text-text3 text-sm">(89)</span></div><div class="text-text3 text-sm">Mumbai</div></div><div class="flex gap-2"><button onclick="openInterest('demo','Priya Sharma','interest')" class="flex-1 py-2.5 bg-accent text-black rounded-xl text-sm font-bold hover:bg-accentHover transition">I'm Interested</button><button onclick="openInterest('demo','Priya Sharma','callback')" class="py-2.5 px-3 border-2 border-border rounded-xl text-sm font-bold text-text1 hover:border-text2 transition">&#128222;</button></div></div>
-    <div class="coach-card bg-bg1 rounded-3xl border border-border p-8 hover:border-accent/30 hover:shadow-xl hover:shadow-accent/5 transition-all" data-cat="education"><div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue to-indigo-500 text-white flex items-center justify-center text-3xl font-black mb-6">S</div><div class="inline-block px-2 py-0.5 rounded-full text-xs font-bold bg-blue/15 text-blue mb-2">Education</div><h3 class="text-xl font-bold text-text0">Sneha Iyer</h3><div class="text-accent font-semibold text-sm mb-3">IIT-JEE &amp; NEET Prep</div><p class="text-text2 text-sm mb-4">IIT alumnus helping students crack competitive exams with structured study plans.</p><div class="flex items-center justify-between pt-4 border-t border-border mb-4"><div><span class="text-yellow">&#9733;</span> <span class="font-bold text-text0">4.9</span> <span class="text-text3 text-sm">(156)</span></div><div class="text-text3 text-sm">Chennai</div></div><div class="flex gap-2"><button onclick="openInterest('demo','Sneha Iyer','interest')" class="flex-1 py-2.5 bg-accent text-black rounded-xl text-sm font-bold hover:bg-accentHover transition">I'm Interested</button><button onclick="openInterest('demo','Sneha Iyer','callback')" class="py-2.5 px-3 border-2 border-border rounded-xl text-sm font-bold text-text1 hover:border-text2 transition">&#128222;</button></div></div>
-  </div>
-</div>
-</section>
-
-<!-- INTEREST MODAL -->
-<div id="interestModal" class="fixed inset-0 z-[100] hidden">
-<div class="absolute inset-0 bg-black/60" onclick="closeInterest()"></div>
-<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-bg1 border border-border rounded-3xl p-8 w-full max-w-md shadow-2xl">
-  <div class="flex items-center justify-between mb-6"><h3 class="text-xl font-bold text-text0" id="interestTitle">I'm Interested</h3><button onclick="closeInterest()" class="text-text3 hover:text-text0 text-xl">&times;</button></div>
-  <p class="text-text2 text-sm mb-4" id="interestSubtitle">Leave your details.</p>
-  <form id="interestForm" class="space-y-3" autocomplete="off">
-    <input type="hidden" id="intCoachId"><input type="hidden" id="intType">
-    <div><label class="block text-sm font-semibold mb-1 text-text1">Your Name *</label><input required id="intName" autocomplete="off" class="w-full px-4 py-3 rounded-xl bg-bg2 border border-border text-text0 outline-none focus:border-accent" placeholder="Full name"></div>
-    <div class="grid grid-cols-2 gap-3">
-      <div><label class="block text-sm font-semibold mb-1 text-text1">Phone *</label><input required id="intPhone" type="tel" autocomplete="off" class="w-full px-4 py-3 rounded-xl bg-bg2 border border-border text-text0 outline-none focus:border-accent" placeholder="+91..."></div>
-      <div><label class="block text-sm font-semibold mb-1 text-text1">Email</label><input id="intEmail" type="email" autocomplete="off" class="w-full px-4 py-3 rounded-xl bg-bg2 border border-border text-text0 outline-none focus:border-accent"></div>
-    </div>
-    <div><label class="block text-sm font-semibold mb-1 text-text1">Message</label><textarea id="intMessage" rows="2" autocomplete="off" class="w-full px-4 py-3 rounded-xl bg-bg2 border border-border text-text0 outline-none resize-none focus:border-accent"></textarea></div>
-    <button type="submit" id="intSubmitBtn" class="w-full py-3.5 bg-accent text-black rounded-xl font-bold text-lg hover:bg-accentHover transition">Send Request</button>
-  </form>
-  <div id="interestSuccess" class="hidden text-center py-6"><div class="text-5xl mb-3">&#10004;</div><h3 class="text-xl font-black text-text0 mb-2">Sent!</h3><p class="text-text2 text-sm" id="interestSuccessMsg">Coach will contact you soon.</p><button onclick="closeInterest()" class="mt-4 px-6 py-2.5 bg-bg3 rounded-xl font-bold text-sm text-text0 border border-border">Close</button></div>
-</div>
-</div>
-
-<!-- FEATURES -->
-<section id="features" class="py-24 bg-bg1 border-t border-border">
-<div class="max-w-7xl mx-auto px-6">
-  <div class="text-center mb-16"><div class="text-sm font-bold text-accent uppercase tracking-widest mb-3">Everything you need</div><h2 class="text-4xl lg:text-5xl font-black tracking-tight text-text0">Built for how coaches work</h2></div>
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-    <div class="p-8 rounded-3xl border-2 border-border hover:border-accent/30 transition-all"><div class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-5 text-2xl">&#10024;</div><h3 class="text-xl font-bold text-text0 mb-2">AI Assistant</h3><p class="text-text2">Manage clients and sessions using simple commands.</p></div>
-    <div class="p-8 rounded-3xl border-2 border-border hover:border-accent/30 transition-all"><div class="w-14 h-14 rounded-2xl bg-emerald/10 flex items-center justify-center mb-5 text-2xl">&#128197;</div><h3 class="text-xl font-bold text-text0 mb-2">Smart Scheduling</h3><p class="text-text2">Plan sessions in bulk, replicate daily schedules across working days.</p></div>
-    <div class="p-8 rounded-3xl border-2 border-border hover:border-accent/30 transition-all"><div class="w-14 h-14 rounded-2xl bg-blue/10 flex items-center justify-center mb-5 text-2xl">&#128200;</div><h3 class="text-xl font-bold text-text0 mb-2">Attendance &amp; Progress</h3><p class="text-text2">Mark attendance, track progress, auto-calculate payments.</p></div>
-    <div class="p-8 rounded-3xl border-2 border-border hover:border-accent/30 transition-all"><div class="w-14 h-14 rounded-2xl bg-emerald/10 flex items-center justify-center mb-5 text-2xl">&#128172;</div><h3 class="text-xl font-bold text-text0 mb-2">WhatsApp Reminders</h3><p class="text-text2">One-click reminders and payment links via WhatsApp.</p></div>
-    <div class="p-8 rounded-3xl border-2 border-border hover:border-accent/30 transition-all"><div class="w-14 h-14 rounded-2xl bg-yellow/10 flex items-center justify-center mb-5 text-2xl">&#128179;</div><h3 class="text-xl font-bold text-text0 mb-2">Razorpay Payments</h3><p class="text-text2">Instant payment links. Clients pay online, you get paid.</p></div>
-    <div class="p-8 rounded-3xl border-2 border-border hover:border-accent/30 transition-all"><div class="w-14 h-14 rounded-2xl bg-red/10 flex items-center justify-center mb-5 text-2xl">&#128101;</div><h3 class="text-xl font-bold text-text0 mb-2">Bulk Import</h3><p class="text-text2">Import clients and workouts from CSV or via AI.</p></div>
-  </div>
-</div>
-</section>
-
-<!-- PRICING -->
-<section id="pricing" class="py-24 bg-bg0 border-t border-border">
-<div class="max-w-7xl mx-auto px-6">
-  <div class="text-center mb-16"><div class="text-sm font-bold text-accent uppercase tracking-widest mb-3">Simple pricing</div><h2 class="text-4xl lg:text-5xl font-black tracking-tight text-text0">Start free, scale as you grow</h2></div>
-  <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-    <div class="rounded-3xl p-8 bg-bg1 border-2 border-border"><h3 class="text-xl font-bold text-text0 mb-2">Starter</h3><div class="text-4xl font-black text-text0 mb-6">Free</div><ul class="space-y-3 mb-8 text-sm text-text1"><li>&#10003; Up to 10 clients</li><li>&#10003; AI Assistant</li><li>&#10003; Scheduling</li><li>&#10003; WhatsApp reminders</li></ul><a href="#register" class="block text-center py-3.5 rounded-xl font-bold bg-bg3 text-text0 border border-border hover:border-text2 transition">Start Free</a></div>
-    <div class="relative rounded-3xl p-8 bg-bg1 ring-2 ring-accent shadow-2xl shadow-accent/10 scale-105"><div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-accent text-black text-sm font-bold rounded-full">Popular</div><h3 class="text-xl font-bold text-text0 mb-2">Pro</h3><div class="flex items-baseline gap-1 mb-6"><span class="text-4xl font-black text-text0">&#8377;1,499</span><span class="text-sm text-text3">/mo</span></div><ul class="space-y-3 mb-8 text-sm text-text1"><li><span class="text-accent">&#10003;</span> Unlimited clients</li><li><span class="text-accent">&#10003;</span> Bulk import</li><li><span class="text-accent">&#10003;</span> Recurring schedules</li><li><span class="text-accent">&#10003;</span> Priority support</li></ul><a href="#register" class="block text-center py-3.5 rounded-xl font-bold bg-accent text-black hover:bg-accentHover transition">Start Trial</a></div>
-    <div class="rounded-3xl p-8 bg-bg1 border-2 border-border"><h3 class="text-xl font-bold text-text0 mb-2">Business</h3><div class="flex items-baseline gap-1 mb-6"><span class="text-4xl font-black text-text0">&#8377;3,999</span><span class="text-sm text-text3">/mo</span></div><ul class="space-y-3 mb-8 text-sm text-text1"><li>&#10003; Everything in Pro</li><li>&#10003; Multi-coach</li><li>&#10003; Custom branding</li><li>&#10003; API access</li></ul><a href="#register" class="block text-center py-3.5 rounded-xl font-bold bg-bg3 text-text0 border border-border hover:border-text2 transition">Contact Sales</a></div>
-  </div>
-</div>
-</section>
-
-<!-- REGISTER / LOGIN -->
-<section id="register" class="py-24 bg-bg1 border-t border-border">
-<div class="max-w-3xl mx-auto px-6">
-  <div class="text-center mb-12"><h2 class="text-4xl lg:text-5xl font-black tracking-tight text-text0 mb-4">Start coaching</h2><p class="text-text2 text-lg">Create your free account today.</p></div>
-  <div class="bg-bg2 rounded-3xl p-8 border border-border">
-    <div id="authTabs" class="flex gap-2 mb-6 bg-bg0 rounded-xl p-1">
-      <button onclick="showTab('register')" id="tabRegister" class="flex-1 py-2.5 rounded-lg text-sm font-bold bg-bg3 text-text0 border border-border">Register</button>
-      <button onclick="showTab('login')" id="tabLogin" class="flex-1 py-2.5 rounded-lg text-sm font-bold text-text2">Login</button>
-    </div>
-    <form id="registerForm" class="space-y-4" autocomplete="off">
-      <div><label class="block text-sm font-semibold mb-1 text-text1">Full Name *</label><input required id="regName" autocomplete="new-password" class="w-full px-4 py-3 rounded-xl bg-bg0 border border-border text-text0 outline-none focus:border-accent"></div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div><label class="block text-sm font-semibold mb-1 text-text1">Email *</label><input required type="email" id="regEmail" autocomplete="new-password" class="w-full px-4 py-3 rounded-xl bg-bg0 border border-border text-text0 outline-none focus:border-accent"></div>
-        <div><label class="block text-sm font-semibold mb-1 text-text1">Phone *</label><input required type="tel" id="regPhone" autocomplete="new-password" class="w-full px-4 py-3 rounded-xl bg-bg0 border border-border text-text0 outline-none focus:border-accent" placeholder="+91..."></div>
-      </div>
-      <div><label class="block text-sm font-semibold mb-1 text-text1">Password *</label><input required type="password" id="regPassword" autocomplete="new-password" class="w-full px-4 py-3 rounded-xl bg-bg0 border border-border text-text0 outline-none focus:border-accent" minlength="6"></div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div><label class="block text-sm font-semibold mb-1 text-text1">Category</label><select id="regSpec" class="w-full px-4 py-3 rounded-xl bg-bg0 border border-border text-text0 outline-none"><option value="fitness">Fitness</option><option value="education">Education</option><option value="music">Music</option><option value="yoga">Yoga</option><option value="business">Business</option><option value="life">Life Coaching</option></select></div>
-        <div><label class="block text-sm font-semibold mb-1 text-text1">Experience (yrs)</label><input type="number" id="regExp" value="0" autocomplete="off" class="w-full px-4 py-3 rounded-xl bg-bg0 border border-border text-text0 outline-none"></div>
-      </div>
-      <div><label class="block text-sm font-semibold mb-1 text-text1">Bio</label><textarea id="regBio" rows="2" autocomplete="off" class="w-full px-4 py-3 rounded-xl bg-bg0 border border-border text-text0 outline-none resize-none"></textarea></div>
-      <button type="submit" id="regBtn" class="w-full py-4 bg-accent text-black rounded-xl font-bold text-lg hover:bg-accentHover transition">Create Coach Account</button>
-    </form>
-    <form id="loginForm" class="space-y-4 hidden" autocomplete="off">
-      <div><label class="block text-sm font-semibold mb-1 text-text1">Email *</label><input required type="email" id="loginEmail" autocomplete="new-password" class="w-full px-4 py-3 rounded-xl bg-bg0 border border-border text-text0 outline-none focus:border-accent"></div>
-      <div><label class="block text-sm font-semibold mb-1 text-text1">Password *</label><input required type="password" id="loginPassword" autocomplete="new-password" class="w-full px-4 py-3 rounded-xl bg-bg0 border border-border text-text0 outline-none focus:border-accent"></div>
-      <button type="submit" id="loginBtn" class="w-full py-4 bg-accent text-black rounded-xl font-bold text-lg hover:bg-accentHover transition">Login</button>
-      <p class="text-center text-sm text-text2">No account? <a href="#" onclick="showTab('register');return false;" class="text-accent font-semibold">Register here</a></p>
-    </form>
-    <div id="regSuccess" class="hidden text-center py-8"><div class="text-5xl mb-4">&#10004;</div><h3 class="text-2xl font-black text-text0 mb-2">Welcome to CoachMe!</h3><p class="text-text2 mb-6">Account created. Login now.</p><button onclick="showTab('login')" class="px-8 py-3 bg-accent text-black rounded-xl font-bold">Login Now</button></div>
-    <div id="loginSuccess" class="hidden text-center py-8"><div class="text-5xl mb-4">&#128075;</div><h3 class="text-2xl font-black text-text0 mb-2" id="welcomeMsg">Welcome back!</h3><p class="text-text2 mb-6">Redirecting to dashboard...</p><a href="#" id="dashboardLink" class="px-8 py-3 bg-accent text-black rounded-xl font-bold">Go to Dashboard &rarr;</a></div>
-  </div>
-</div>
-</section>
-
-<footer class="bg-bg0 text-text3 py-12 border-t border-border"><div class="max-w-7xl mx-auto px-6 text-center text-sm">&copy; 2026 CoachMe.life — Built in India, for coaches of every kind.</div></footer>
-
+<nav class="rail" id="rail"></nav>
+<main class="stage" id="app"></main>
 <script>
-var API_HOSTS=['https://coach-api-1770519048.azurewebsites.net/api/v1','https://coach-api-1770519048.azurewebsites.net/api/v1'];
-var API=API_HOSTS[0];
-var DASH_HOSTS=['https://coachfront49992.z29.web.core.windows.net','https://coachfront49992.z29.web.core.windows.net'];
-var DASHBOARD=DASH_HOSTS[0];
+const API='https://coach-api-1770519048.azurewebsites.net/api/v1';
+let USER=null,SCREEN='dashboard';
+try{USER=JSON.parse(localStorage.getItem('cf_user'))}catch{}
+// Accept auth from landing page redirect
+try{const params=new URLSearchParams(window.location.search);const authParam=params.get('auth');if(authParam){USER=JSON.parse(decodeURIComponent(authParam));localStorage.setItem('cf_user',JSON.stringify(USER));window.history.replaceState({},'',window.location.pathname)}}catch(e){console.error('Auth param parse error',e)}
+function cid(){return USER?.id||''}
+function hdr(){return{'Content-Type':'application/json','X-Coach-Id':cid()}}
+async function api(ep,o={}){try{const r=await fetch(API+ep,{headers:hdr(),...o});if(!r.ok&&r.status===405){console.error('405 Method Not Allowed:',ep,o.method||'GET');return{success:false,detail:'Method not allowed (405). Backend may need redeployment. Endpoint: '+ep}}const j=await r.json();return j}catch(e){console.error(ep,e);return{success:false,detail:e.message}}}
+function toast(m,ok=true){const t=document.createElement('div');t.className='toast '+(ok?'toast-ok':'toast-err');t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),3000)}
+function $(id){return document.getElementById(id)}
+function h(s){return(s||'').replace(/</g,'&lt;')}
+function closeModal(){document.querySelector('.modal-bg')?.remove()}
+function parseServerTime(s){const m=s.match(/(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})/);if(!m)return{h:0,mi:0,dateStr:s};return{y:+m[1],mo:+m[2],d:+m[3],h:+m[4],mi:+m[5],dateStr:m[1]+'-'+m[2]+'-'+m[3]}}
+function fmtTime(s){const t=parseServerTime(s);return String(t.h).padStart(2,'0')+':'+String(t.mi).padStart(2,'0')}
+function fmtDateStr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function getWeekDays(off){const n=new Date();const m=new Date(n);m.setDate(n.getDate()-((n.getDay()+6)%7)+off*7);const d=[];for(let i=0;i<7;i++){const x=new Date(m);x.setDate(m.getDate()+i);d.push(x)}return d}
+function getAssignedWorkout(id){try{return JSON.parse(localStorage.getItem('cf_assign_'+id))}catch{return null}}
+let _maxPerSlot=parseInt(localStorage.getItem('cf_maxslot'))||4;
 
-function openInterest(cid,name,type){document.getElementById('intCoachId').value=cid;document.getElementById('intType').value=type;document.getElementById('interestTitle').textContent=type==='callback'?'Request Callback':"I'm Interested in "+name;document.getElementById('interestSubtitle').textContent=name+' will contact you.';document.getElementById('interestForm').classList.remove('hidden');document.getElementById('interestSuccess').classList.add('hidden');document.getElementById('interestModal').classList.remove('hidden');document.body.style.overflow='hidden'}
-function closeInterest(){document.getElementById('interestModal').classList.add('hidden');document.body.style.overflow=''}
-document.getElementById('interestForm').addEventListener('submit',async function(e){e.preventDefault();var btn=document.getElementById('intSubmitBtn');btn.textContent='Sending...';btn.disabled=true;try{var r=await fetch(API+'/coaches/'+document.getElementById('intCoachId').value+'/interest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lead_type:document.getElementById('intType').value,name:document.getElementById('intName').value,phone:document.getElementById('intPhone').value,email:document.getElementById('intEmail').value,message:document.getElementById('intMessage').value})});var d=await r.json();if(d.success){document.getElementById('interestForm').classList.add('hidden');document.getElementById('interestSuccess').classList.remove('hidden');document.getElementById('interestForm').reset()}else alert(d.detail||'Error')}catch(err){alert('Connection error')}btn.textContent='Send Request';btn.disabled=false});
+const NAV=[{id:'dashboard',icon:'🏠',lbl:'HOME'},{id:'clients',icon:'👥',lbl:'CLIENTS'},{id:'scheduler',icon:'📅',lbl:'SCHEDULE'},{id:'availability',icon:'🕐',lbl:'SLOTS'},{id:'workouts',icon:'💪',lbl:'WORKOUTS'},{id:'progress',icon:'📊',lbl:'PROGRESS'},{id:'leads',icon:'🎯',lbl:'LEADS'},{id:'payments',icon:'💳',lbl:'PAY'}];
+function renderRail(){$('rail').innerHTML='<div class="logo">CF</div>'+NAV.map(n=>'<button onclick="go(\''+n.id+'\')" '+(SCREEN===n.id?'class="active"':'')+'>'+n.icon+'<span>'+n.lbl+'</span></button>').join('')+'<button onclick="doLogout()" style="margin-top:auto">🚪<span>EXIT</span></button>'}
+function go(s){SCREEN=s;renderRail();render()}
+function doLogout(){localStorage.removeItem('cf_user');USER=null;renderApp()}
 
-function filterCoaches(cat){document.querySelectorAll('.cat-btn').forEach(b=>{b.classList.remove('active')});if(cat!=='all'){document.querySelectorAll('.cat-btn').forEach(b=>{if(b.textContent.toLowerCase().includes(cat))b.classList.add('active')})}else document.querySelector('.cat-btn').classList.add('active');document.querySelectorAll('.coach-card').forEach(c=>{c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none'})}
-function showTab(t){document.getElementById('registerForm').classList.toggle('hidden',t!=='register');document.getElementById('loginForm').classList.toggle('hidden',t!=='login');document.getElementById('regSuccess').classList.add('hidden');document.getElementById('loginSuccess').classList.add('hidden');document.getElementById('tabRegister').className='flex-1 py-2.5 rounded-lg text-sm font-bold '+(t==='register'?'bg-bg3 text-text0 border border-border':'text-text2');document.getElementById('tabLogin').className='flex-1 py-2.5 rounded-lg text-sm font-bold '+(t==='login'?'bg-bg3 text-text0 border border-border':'text-text2');document.getElementById('authTabs').classList.remove('hidden')}
+// ─── LOGIN ──────────────────────────
+function renderLogin(){$('rail').innerHTML='';$('app').innerHTML=`<div style="max-width:380px;margin:80px auto;text-align:center"><div class="logo" style="width:48px;height:48px;font-size:18px;margin:0 auto 12px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:var(--accent);color:#000;font-weight:800">CF</div><h1 style="font-size:20px;margin-bottom:4px">CoachFlow</h1><p style="color:var(--text-2);font-size:12px;margin-bottom:24px">Sign in</p><div id="le" style="display:none;background:rgba(248,113,113,.15);color:var(--red);padding:8px;border-radius:8px;font-size:11px;margin-bottom:10px"></div><div class="form-group"><label>Email</label><input id="lE" type="email" placeholder="ravi@fitforge.in"></div><div class="form-group"><label>Password</label><input id="lP" type="password" placeholder="coach123"></div><button class="btn btn-accent" style="width:100%;padding:10px;font-size:13px;margin-top:4px" onclick="doLogin()">Sign In</button></div>`}
+async function doLogin(){const e=$('lE').value,p=$('lP').value;if(!e||!p)return;const d=await api('/auth/login',{method:'POST',body:JSON.stringify({email:e,password:p})});if(d.success){USER=d.user;localStorage.setItem('cf_user',JSON.stringify(d.user));renderApp()}else{$('le').style.display='block';$('le').textContent=d.detail||'Login failed'}}
 
-document.getElementById('registerForm').addEventListener('submit',async function(e){e.preventDefault();var btn=document.getElementById('regBtn');btn.textContent='Creating...';btn.disabled=true;try{var r=await fetch(API+'/coaches/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({full_name:document.getElementById('regName').value,email:document.getElementById('regEmail').value,phone:document.getElementById('regPhone').value,password:document.getElementById('regPassword').value,specialization:document.getElementById('regSpec').value,bio:document.getElementById('regBio').value,experience_years:parseInt(document.getElementById('regExp').value)||0})});var d=await r.json();if(d.success){document.getElementById('registerForm').classList.add('hidden');document.getElementById('authTabs').classList.add('hidden');document.getElementById('regSuccess').classList.remove('hidden')}else alert(d.detail||'Failed')}catch(err){alert('Connection error')}btn.textContent='Create Coach Account';btn.disabled=false});
+// ─── DASHBOARD (clickable) ──────────
+async function renderDashboard(){
+  $('app').innerHTML=`<div class="topbar"><h2>Dashboard<span class="sub">${h(USER?.full_name)}</span></h2></div><div class="loading">Loading...</div>`;
+  const[stats,today]=await Promise.all([api('/dashboard/stats'),api('/schedule/today')]);
+  const s=stats.stats||{};const ss=(today.sessions||[]).filter(x=>x.status!=='cancelled');
+  $('app').innerHTML=`
+  <div class="topbar"><h2>Dashboard<span class="sub">${h(USER?.full_name)} · ${new Date().toLocaleDateString('en-IN',{weekday:'short',month:'short',day:'numeric'})}</span></h2></div>
+  <div class="grid-4">
+    <div class="card stat" onclick="go('scheduler')"><h3 style="color:var(--accent)">${ss.length}</h3><p>Today's Sessions</p></div>
+    <div class="card stat" onclick="go('clients')"><h3 style="color:var(--green)">${s.total_clients||0}</h3><p>Active Clients</p></div>
+    <div class="card stat" onclick="go('workouts')"><h3 style="color:var(--blue)">${s.total_workouts||0}</h3><p>Workouts</p></div>
+    <div class="card stat" onclick="go('leads')"><h3 style="color:var(--yellow)">${s.total_leads||0}</h3><p>Leads</p></div>
+  </div>
+  <div class="card"><div class="card-title">Today's Sessions</div>
+  ${ss.length?ss.map(se=>{
+    const attended=se.status==='confirmed'||se.status==='completed';
+    const absent=se.status==='no_show';
+    const canMark=!attended&&!absent;
+    return`<div class="clickable" style="display:flex;align-items:center;justify-content:space-between;padding:8px 4px;border-bottom:1px solid var(--bg-3)">
+    <div style="flex:1"><strong style="font-size:12px">${h(se.client_name)}</strong>
+    <div style="font-size:10px;color:var(--text-2)">${fmtTime(se.scheduled_at)} · ${se.duration_minutes}min${se.workout_name?' · '+h(se.workout_name):''}</div></div>
+    <div style="display:flex;gap:4px;align-items:center">
+      ${attended?'<span style="color:var(--green);font-weight:800;font-size:14px">✓</span>':''}
+      ${absent?'<span style="color:var(--red);font-weight:800;font-size:14px">✗</span>':''}
+      <span class="badge ${attended?'badge-green':absent?'badge-red':'badge-yellow'}">${se.status}</span>
+      ${canMark?`<button class="btn btn-sm btn-green" onclick="dashAtt('${se.id}','present')">✓</button><button class="btn btn-sm btn-red" onclick="dashAtt('${se.id}','absent')">✗</button>`:''}
+    </div></div>`}).join(''):'<div class="empty">No sessions today</div>'}</div>`;
+}
+async function dashAtt(sid,st){await api('/sessions/'+sid+'/mark-attendance',{method:'POST',body:JSON.stringify({status:st})});toast(st==='present'?'✓ Present':'✗ Absent');renderDashboard()}
 
-document.getElementById('loginForm').addEventListener('submit',async function(e){e.preventDefault();var btn=document.getElementById('loginBtn');btn.textContent='Logging in...';btn.disabled=true;try{var r=await fetch(API+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:document.getElementById('loginEmail').value,password:document.getElementById('loginPassword').value})});var d=await r.json();if(d.success){document.getElementById('loginForm').classList.add('hidden');document.getElementById('authTabs').classList.add('hidden');document.getElementById('loginSuccess').classList.remove('hidden');document.getElementById('welcomeMsg').textContent=d.message||'Welcome!';var authData=encodeURIComponent(JSON.stringify(d.user));setTimeout(function(){window.location.href=DASHBOARD+'?auth='+authData},1500)}else alert(d.detail||'Invalid credentials')}catch(err){alert('Connection error')}btn.textContent='Login';btn.disabled=false});
+// ─── CLIENTS (enhanced) ─────────────
+let _allClients=[];
+async function renderClients(){
+  $('app').innerHTML=`<div class="topbar"><h2>Clients</h2><div style="display:flex;gap:6px"><button class="btn" onclick="showBulkImport()">📤 Bulk Import</button><button class="btn btn-accent" onclick="showAddClient()">+ Add Client</button></div></div><div class="loading">Loading...</div>`;
+  const d=await api('/clients');_allClients=d.clients||[];
+  $('app').innerHTML=`<div class="topbar"><h2>Clients (${_allClients.length})</h2><div style="display:flex;gap:6px"><button class="btn" onclick="showBulkImport()">📤 Bulk Import</button><button class="btn btn-accent" onclick="showAddClient()">+ Add Client</button></div></div>
+  <div class="card">${_allClients.length?`<table><tr><th>Name</th><th>Email</th><th>Phone</th><th>Goal</th><th>Weight</th><th>Workouts</th><th>Type</th><th></th></tr>
+  ${_allClients.map(c=>{const m=typeof c.metadata==='string'?JSON.parse(c.metadata):c.metadata||{};const wk=getAssignedWorkout(c.id);const ph=localStorage.getItem('cf_photo_'+c.id);
+  return`<tr><td><div style="display:flex;align-items:center;gap:6px">${ph?'<img src="'+ph+'" style="width:28px;height:28px;border-radius:6px;object-fit:cover">':'<div style="width:28px;height:28px;border-radius:6px;background:var(--bg-3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--accent)">'+(c.name||'?')[0]+'</div>'}<div><strong>${h(c.name)}</strong>${wk?'<div style="font-size:9px;color:var(--accent)">'+h(wk.name)+'</div>':''}</div></div></td>
+  <td style="color:var(--text-2);font-size:11px">${h(c.email||'—')}</td><td style="color:var(--text-2);font-size:11px">${h(c.phone||'—')}</td>
+  <td><span class="badge badge-accent">${h(m.goal||'—')}</span></td>
+  <td style="font-size:11px">${m.weight?m.weight+'kg':'—'}</td>
+  <td style="color:var(--text-2);font-size:11px">${(()=>{const mp=JSON.parse(localStorage.getItem('cf_wkmap_'+c.id)||'[]');return mp.length?mp.length+' workout'+(mp.length>1?'s':''):'—'})()}</td>
+  <td><span class="badge ${(m.type||'').toLowerCase()==='online'?'badge-blue':'badge-green'}">${h(m.type||'Offline')}</span></td>
+  <td style="display:flex;gap:4px"><span class="cli-eye" onclick="showEditClient('${c.id}')" style="opacity:.6;font-size:14px;cursor:pointer" title="Edit">✏</span><span class="cli-eye" onclick="openClientPanel('${c.id}')" style="opacity:.6;font-size:14px;cursor:pointer" title="View">👁</span><span class="cli-eye" onclick="openProgressView('${c.id}')" style="opacity:.6;font-size:14px;cursor:pointer" title="Progress">📊</span><button class="btn btn-sm btn-red" onclick="delClient('${c.id}')" title="Delete Client">🗑</button></td></tr>`}).join('')}</table>`
+  :'<div class="empty">No clients yet</div>'}</div>`;
+}
+function showAddClient(){document.body.insertAdjacentHTML('beforeend',`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal" style="max-width:540px"><h3>Add Client</h3>
+<div style="font-size:10px;color:var(--text-3);margin-bottom:10px">Fields marked * are required</div>
+<div class="form-row"><div><label>Full Name *</label><input id="cn" placeholder="Rahul Sharma"></div><div><label>Phone</label><input id="cp" placeholder="+91..."></div></div>
+<div class="form-row"><div><label>Email</label><input id="ce" type="email"></div><div><label>Type</label><select id="ct"><option>Offline</option><option>Online</option></select></div></div>
+<div class="form-row"><div><label>Goal</label><input id="cg" placeholder="Muscle Gain / Weight Loss"></div><div><label>Start Date</label><input id="cstart" type="date" value="${fmtDateStr(new Date())}"></div></div>
+<div style="border-top:1px solid var(--border);margin:10px 0;padding-top:10px">
+<div style="font-size:11px;font-weight:600;margin-bottom:6px">Health Details</div>
+<div class="form-row"><div><label>Current Weight (kg)</label><input id="cwt" type="number" placeholder="75"></div><div><label>Height (cm)</label><input id="cht" type="number" placeholder="170"></div></div>
+<div class="form-group"><label>Injuries / Medical Conditions</label><input id="cinj" placeholder="Knee pain, Lower back issue..."></div>
+<div class="form-group"><label>Diet Restrictions</label><input id="cdiet" placeholder="Vegetarian, No dairy, Gluten-free..."></div>
+<div class="form-group"><label>Additional Notes</label><textarea id="cnotes" rows="2" placeholder="Training history, preferences..."></textarea></div>
+</div>
+<div style="border-top:1px solid var(--border);margin:10px 0;padding-top:10px">
+<div class="form-row"><div><label>Monthly Fee (₹)</label><input id="cfee" type="number" placeholder="5000"></div><div><label>Photo</label><input id="cphoto" type="file" accept="image/*" onchange="previewClientPhoto(this)"></div></div>
+<div id="cphotoPreview" style="display:none;margin-top:4px"><img id="cphotoPrev" style="width:48px;height:48px;border-radius:8px;object-fit:cover;border:1px solid var(--border)"></div>
+</div>
+<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px"><button class="btn" onclick="closeModal()">Cancel</button>
+<button class="btn btn-accent" onclick="addClient()">Add Client</button></div></div></div>`)}
 
-async function loadRealCoaches(){try{var r=await fetch(API+'/coaches');var d=await r.json();if(!d.success||!d.coaches.length)return;var grid=document.getElementById('coachGrid');var grads=['from-emerald to-teal-500','from-violet-400 to-purple-500','from-orange-400 to-red-500','from-blue to-indigo-500','from-pink-400 to-rose-500','from-yellow to-amber-500'];var catC={fitness:'bg-emerald/15 text-emerald',education:'bg-blue/15 text-blue',music:'bg-pink-400/15 text-pink-400',yoga:'bg-violet-400/15 text-violet-400',business:'bg-yellow/15 text-yellow',general:'bg-text2/15 text-text2'};var div=document.createElement('div');div.className='col-span-full text-center py-4';div.innerHTML='<div class="inline-block px-6 py-2 bg-accent/10 text-accent border border-accent/20 rounded-full text-sm font-bold">Registered Coaches</div>';grid.appendChild(div);d.coaches.forEach(function(c,i){var g=grads[i%grads.length];var cb=catC[c.specialization]||catC.general;var card=document.createElement('div');card.className='coach-card bg-bg1 rounded-3xl border border-border p-8 hover:border-accent/30 transition-all';card.dataset.cat=c.specialization||'general';card.innerHTML='<div class="w-20 h-20 rounded-2xl bg-gradient-to-br '+g+' text-black flex items-center justify-center text-3xl font-black mb-6">'+(c.name||'C')[0]+'</div><div class="inline-block px-2 py-0.5 rounded-full text-xs font-bold '+cb+' mb-2">'+(c.specialization||'general')+'</div><h3 class="text-xl font-bold text-text0">'+c.name+'</h3><div class="text-accent font-semibold text-sm mb-3">'+(c.bio?c.bio.slice(0,60):c.specialization||'Coach')+'</div><div class="flex gap-2"><button onclick="openInterest(\''+c.id+"','"+c.name.replace(/'/g,"\\'")+"','interest')\" class=\"flex-1 py-2.5 bg-accent text-black rounded-xl text-sm font-bold hover:bg-accentHover transition\">I'm Interested</button></div>";grid.appendChild(card)})}catch(e){console.log(e)}}
-loadRealCoaches();
+function previewClientPhoto(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{$('cphotoPrev').src=e.target.result;$('cphotoPreview').style.display=''};r.readAsDataURL(f)}
+
+async function addClient(){
+  const n=$('cn').value;if(!n)return toast('Name required',false);
+  const fee=$('cfee').value;const start=$('cstart').value;
+  // Read photo as base64
+  let photoB64=null;const photoInp=$('cphoto');
+  if(photoInp&&photoInp.files[0]){photoB64=await new Promise(r=>{const rd=new FileReader();rd.onload=e=>r(e.target.result);rd.readAsDataURL(photoInp.files[0])})}
+  const d=await api('/clients',{method:'POST',body:JSON.stringify({name:n,email:$('ce').value,phone:$('cp').value,goal:$('cg').value,type:$('ct').value})});
+  if(!d.success)return toast(d.detail||'Error',false);
+  closeModal();
+  const cid=d.client.id;
+  // Store extended metadata locally + attempt API
+  const meta={goal:$('cg').value,type:$('ct').value,weight:$('cwt').value,height:$('cht').value,injuries:$('cinj').value,diet:$('cdiet').value,notes:$('cnotes')?.value||'',start_date:start};
+  await api('/clients/'+cid+'/metadata',{method:'PUT',body:JSON.stringify(meta)});
+  localStorage.setItem('cf_meta_'+cid,JSON.stringify(meta));
+  if(fee)localStorage.setItem('cf_fee_'+cid,JSON.stringify({fee,start_date:start,plan:'monthly'}));
+  if(photoB64)localStorage.setItem('cf_photo_'+cid,photoB64);
+  // If weight provided, create initial progress record
+  if($('cwt').value){api('/progress/upload',{method:'POST',body:JSON.stringify({client_id:cid,weight:parseFloat($('cwt').value),measurements:{height:parseFloat($('cht').value)||null},date:start||fmtDateStr(new Date()),notes:'Initial measurement'})})}
+  toast('Client added');renderClients();
+}
+async function delClient(id){if(!confirm('Delete?'))return;await api('/clients/'+id,{method:'DELETE'});localStorage.removeItem('cf_photo_'+id);localStorage.removeItem('cf_meta_'+id);localStorage.removeItem('cf_fee_'+id);toast('Deleted');renderClients()}
+
+// ── BULK IMPORT (XLSX) ──
+function showBulkImport(){document.body.insertAdjacentHTML('beforeend',`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal" style="max-width:500px"><h3>📤 Bulk Import Clients</h3>
+<p style="font-size:11px;color:var(--text-2);margin-bottom:10px">Upload an Excel file (.xlsx) with columns: Name, Email, Phone, Goal, Type, Weight, Injuries, Diet, Monthly Fee</p>
+<div class="form-group"><label>Excel File (.xlsx)</label><input id="bulkFile" type="file" accept=".xlsx,.xls,.csv"></div>
+<div id="bulkPreview" style="display:none;margin:10px 0;max-height:200px;overflow-y:auto;font-size:10px;background:var(--bg-2);border-radius:8px;padding:8px"></div>
+<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px"><button class="btn" onclick="closeModal()">Cancel</button>
+<button class="btn" onclick="downloadTemplate()">📥 Template</button>
+<button class="btn btn-accent" id="bulkBtn" onclick="doBulkImport()" disabled>Import</button></div></div></div>`);
+$('bulkFile').addEventListener('change',parseBulkFile)}
+
+function downloadTemplate(){
+  // Generate CSV template as fallback (XLSX template is separate file)
+  const csv='Name,Email,Phone,Goal,Type,Weight (kg),Injuries,Diet Restrictions,Monthly Fee\\nRahul Sharma,rahul@email.com,+919876543210,Muscle Gain,Offline,78,None,Vegetarian,5000';
+  const blob=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='client_import_template.csv';a.click();toast('Template downloaded')
+}
+
+let _bulkClients=[];
+async function parseBulkFile(){
+  const file=$('bulkFile').files[0];if(!file)return;
+  _bulkClients=[];
+  const ext=file.name.split('.').pop().toLowerCase();
+  if(ext==='csv'){
+    const text=await file.text();const lines=text.trim().split('\\n');
+    const hdr=lines[0].split(',').map(h=>h.trim().toLowerCase());
+    for(let i=1;i<lines.length;i++){
+      const vals=lines[i].split(',');const obj={};hdr.forEach((h,j)=>obj[h]=vals[j]?.trim()||'');
+      _bulkClients.push({name:obj.name||obj['full name']||'',email:obj.email||'',phone:obj.phone||'',goal:obj.goal||'',type:obj.type||'Offline',weight:obj['weight (kg)']||obj.weight||'',injuries:obj.injuries||'',diet:obj['diet restrictions']||obj.diet||'',fee:obj['monthly fee']||obj.fee||''});
+    }
+  } else {
+    // XLSX - use SheetJS from CDN
+    if(!window.XLSX){const s=document.createElement('script');s.src='https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js';document.head.appendChild(s);await new Promise(r=>{s.onload=r;s.onerror=()=>{toast('Failed to load XLSX parser',false);r()}})}
+    if(window.XLSX){const data=await file.arrayBuffer();const wb=XLSX.read(data);const ws=wb.Sheets[wb.SheetNames[0]];const rows=XLSX.utils.sheet_to_json(ws);
+    _bulkClients=rows.map(r=>({name:r.Name||r.name||r['Full Name']||'',email:r.Email||r.email||'',phone:String(r.Phone||r.phone||''),goal:r.Goal||r.goal||'',type:r.Type||r.type||'Offline',weight:r['Weight (kg)']||r.Weight||r.weight||'',injuries:r.Injuries||r.injuries||'',diet:r['Diet Restrictions']||r.Diet||r.diet||'',fee:r['Monthly Fee']||r.Fee||r.fee||''}));}
+  }
+  _bulkClients=_bulkClients.filter(c=>c.name);
+  $('bulkPreview').style.display='';
+  $('bulkPreview').innerHTML=`<strong>${_bulkClients.length} clients found:</strong><br>`+_bulkClients.map((c,i)=>`${i+1}. ${h(c.name)} — ${h(c.email||'no email')} — ${h(c.goal||'—')}`).join('<br>');
+  $('bulkBtn').disabled=_bulkClients.length===0;
+}
+async function doBulkImport(){
+  if(!_bulkClients.length)return;
+  $('bulkBtn').textContent='Importing...';$('bulkBtn').disabled=true;
+  // Use the bulk-import endpoint
+  const apiClients=_bulkClients.map(c=>({name:c.name,email:c.email||null,phone:c.phone||null}));
+  const d=await api('/clients/bulk-import',{method:'POST',body:JSON.stringify({clients:apiClients})});
+  // Store metadata locally for each imported client
+  // We can't get IDs back from bulk import, so we'll save metadata by name
+  _bulkClients.forEach(c=>{localStorage.setItem('cf_bulkmeta_'+c.name.toLowerCase(),JSON.stringify({goal:c.goal,type:c.type,weight:c.weight,injuries:c.injuries,diet:c.diet,fee:c.fee}))});
+  closeModal();
+  if(d.success){toast(d.message||'Imported');renderClients()}else toast(d.detail||'Error',false);
+}
+
+
+// ─── SCHEDULER ──────────────────────
+let _clients=[],_weekOffset=0;
+async function renderScheduler(){
+  $('app').innerHTML=`<div class="topbar"><h2>Scheduler</h2><div style="display:flex;gap:6px"><button class="btn" onclick="showReplicateDay()">📋 Replicate</button><button class="btn" onclick="showSlotConfig()">⚙ ${_maxPerSlot}/slot</button><button class="btn btn-accent" onclick="showAddSession()">+ Session</button></div></div><div class="loading">Loading...</div>`;
+  const[sd,cd,avd]=await Promise.all([api('/sessions'),api('/clients'),api('/availability')]);
+  const hd={holidays:avd.holidays||[]};
+  const sessions=sd.sessions||[];_clients=cd.clients||[];
+  const holidays=(hd.holidays||[]).map(x=>x.holiday_date);
+  const days=getWeekDays(_weekOffset);const dayLabels=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const dayStrs=days.map(fmtDateStr);const now=new Date();const todayStr=fmtDateStr(now);const nowHr=now.getHours();
+  const isTodayWeek=dayStrs.includes(todayStr);
+  const hours=[5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
+  function sessAt(ds,hr){return sessions.filter(s=>{const t=parseServerTime(s.scheduled_at);return t.dateStr===ds&&t.h===hr})}
+  function evHtml(s){
+    const sid=s.id||'';const nm=(s.client_name||'').split(' ')[0];const wk=s.workout_name?'·'+s.workout_name.split(' ')[0]:'';const on=s.location==='online';
+    const cancelled=s.status==='cancelled';const attended=s.status==='confirmed'||s.status==='completed';const absent=s.status==='no_show';const cancelReq=s.status==='cancel_requested';
+    const stIcon=attended?'<span style="color:var(--green);font-weight:800">✓</span>':absent?'<span style="color:var(--red);font-weight:800">✗</span>':cancelReq?'<span style="color:var(--yellow);font-weight:800;font-size:9px"> ⚠ CANCEL</span>':'';
+    const canMark=!cancelled&&!attended&&!absent&&!cancelReq;
+    function oc(fn){return 'onclick="event.stopPropagation();'+fn+'"'}
+    return '<div class="sched-evt '+(on?'online':'offline')+'" style="'+(cancelled?'opacity:.3;text-decoration:line-through':cancelReq?'border-left-color:var(--yellow) !important;background:rgba(251,191,36,.12)':attended?'opacity:.8':'')+'"><span class="evt-main">'+(on?'🌐':'🏋️')+' '+h(nm)+(wk?' '+wk:'')+' '+stIcon+'</span><span class="evt-actions">'+(cancelled?'<span class="evt-att" style="color:var(--green);font-weight:700" '+oc("uncancelSess(&apos;"+sid+"&apos;)")+' title="Restore">↩</span>':'')+(cancelReq?'<span class="evt-att att-ok" '+oc("approveCancelReq(&apos;"+sid+"&apos;)")+'>✓</span><span class="evt-att att-no" '+oc("denyCancelReq(&apos;"+sid+"&apos;)")+'>✗</span>':'')+(canMark?'<span class="evt-att att-ok" '+oc("schedAtt(&apos;"+sid+"&apos;,&apos;present&apos;)")+'>✓</span><span class="evt-att att-no" '+oc("schedAtt(&apos;"+sid+"&apos;,&apos;absent&apos;)")+'>✗</span>':'')+'<span class="evt-del" '+oc("delSess(&apos;"+sid+"&apos;)")+'>✕</span></span></div>'}
+  let g='<div></div>'+days.map((d,i)=>{const ds=dayStrs[i];const isToday=ds===todayStr;const isHol=holidays.includes(ds);const df=d.getDate()+'/'+(d.getMonth()+1);return`<div class="sched-hdr ${isToday?'is-today':''} ${isHol?'is-holiday':''}">${dayLabels[i]} <span style="font-size:9px;font-weight:400">${df}</span>${isHol?'<div style="font-size:8px;color:var(--red)">Holiday</div>':''}<span class="cancel-day-btn" onclick="cancelDay('${ds}')">⊘ cancel</span></div>`}).join('');
+  for(const hr of hours){
+    const isNowHr=isTodayWeek&&hr===nowHr;
+    g+=`<div class="sched-time ${isNowHr?'now-hr':''}">${String(hr).padStart(2,'0')}:00</div>`;
+    for(let di=0;di<7;di++){const evts=sessAt(dayStrs[di],hr);const active=evts.filter(e=>e.status!=='cancelled');const over=active.length>_maxPerSlot;const atMax=active.length===_maxPerSlot;const isNowCell=dayStrs[di]===todayStr&&hr===nowHr;
+    g+=`<div class="sched-cell ${over?'full':atMax?'at-max':''} ${isNowCell?'now-slot':''}" data-day="${dayStrs[di]}" data-hr="${hr}" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">${evts.map(evHtml).join('')}<span class="slot-cap ${over?'full':atMax?'at-max':''}">${active.length}/${_maxPerSlot}</span></div>`}}
+  const cliHtml=_clients.map(c=>{const m=typeof c.metadata==='string'?JSON.parse(c.metadata):c.metadata||{};const lm=JSON.parse(localStorage.getItem('cf_meta_'+c.id)||'null')||m;const on=(lm.type||m.type||'').toLowerCase()==='online';const wkN=(getAssignedWorkout(c.id)||{}).name||'';return`<div class="cli ${on?'online':'offline'}" draggable="true" ondragstart="onDragStart(event,'${c.id}','${h(c.name)}')">${on?'🌐':'🏋️'} <span style="flex:1;min-width:0"><span style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${h(c.name?.split(' ')[0])}</span>${wkN?'<span style="font-size:9px;color:var(--accent)">'+h(wkN)+'</span>':''}</span><span class="cli-eye" onclick="event.stopPropagation();openClientPanel('${c.id}')">👁</span></div>`}).join('');
+  const wkLabel=days[0].toLocaleDateString('en-IN',{day:'numeric',month:'short'})+' – '+days[4].toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+  $('app').innerHTML=`<div class="topbar"><h2>Scheduler</h2><div style="display:flex;gap:6px"><button class="btn" onclick="showReplicateDay()">📋 Replicate</button><button class="btn" onclick="showSlotConfig()">⚙ ${_maxPerSlot}/slot</button><button class="btn btn-accent" onclick="showAddSession()">+ Session</button></div></div>
+  <div class="card"><div class="card-title">Coach Calendar<span style="font-size:10px;font-weight:400;color:var(--text-2);margin-left:auto;display:flex;gap:10px"><span style="display:flex;align-items:center;gap:3px"><span style="width:8px;height:8px;border-radius:50%;background:var(--green)"></span>Offline</span><span style="display:flex;align-items:center;gap:3px"><span style="width:8px;height:8px;border-radius:50%;background:var(--blue)"></span>Online</span></span></div><div class="date-nav"><button onclick="_weekOffset--;renderScheduler()">◀</button><button class="today-btn" onclick="_weekOffset=0;renderScheduler()">Today</button><button onclick="_weekOffset++;renderScheduler()">▶</button><span style="font-size:12px;font-weight:600">${wkLabel}</span><input type="date" value="${todayStr}" onchange="jumpToDate(this.value)" style="margin-left:auto;width:140px"></div>
+  <div class="sched-wrap"><div class="sched-sidebar"><div style="font-size:10px;color:var(--text-3);margin-bottom:6px">Drag clients →</div>${cliHtml||'<div class="empty" style="padding:10px">No clients</div>'}</div><div class="sched-grid" style="grid-template-columns:50px repeat(7,1fr)">${g}</div></div></div>`}
+
+function jumpToDate(v){const t=new Date(v);const n=new Date();const nm=new Date(n);nm.setDate(n.getDate()-((n.getDay()+6)%7));const tm=new Date(t);tm.setDate(t.getDate()-((t.getDay()+6)%7));_weekOffset=Math.round((tm-nm)/(7*864e5));renderScheduler()}
+function showSlotConfig(){document.body.insertAdjacentHTML('beforeend',`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal"><h3>⚙ Max Slots Per Hour</h3><div class="form-group"><label>Maximum sessions per time slot</label><input id="msi" type="number" min="1" max="20" value="${_maxPerSlot}"></div><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-accent" onclick="_maxPerSlot=parseInt($('msi').value)||4;localStorage.setItem('cf_maxslot',_maxPerSlot);closeModal();toast('Max: '+_maxPerSlot);renderScheduler()">Save</button></div></div></div>`)}
+async function cancelDay(ds){if(!confirm('Cancel ALL sessions on '+ds+'?'))return;const sd=await api('/sessions');const ss=(sd.sessions||[]).filter(s=>parseServerTime(s.scheduled_at).dateStr===ds&&s.status!=='cancelled');if(!ss.length)return toast('No active sessions',false);for(const s of ss)await api('/sessions/'+s.id+'/cancel',{method:'POST',body:JSON.stringify({reason:'Day cancelled'})});toast('Cancelled '+ss.length);renderScheduler()}
+function onDragStart(ev,id,nm){ev.dataTransfer.setData('clientId',id)}
+function onDragOver(ev){ev.preventDefault();ev.currentTarget.classList.add('drag-over')}
+function onDragLeave(ev){ev.currentTarget.classList.remove('drag-over')}
+async function onDrop(ev){ev.preventDefault();ev.currentTarget.classList.remove('drag-over');const id=ev.dataTransfer.getData('clientId');const day=ev.currentTarget.dataset.day;const hr=ev.currentTarget.dataset.hr;if(!id||!day||!hr)return;const a=getAssignedWorkout(id);const cl=_clients.find(c=>c.id===id);const cm=cl?(typeof cl.metadata==='string'?JSON.parse(cl.metadata):cl.metadata||{}):{};const lm=JSON.parse(localStorage.getItem('cf_meta_'+id)||'null')||cm;const loc=(lm.type||'').toLowerCase()==='online'?'online':'offline';const b={client_id:id,scheduled_at:day+'T'+String(hr).padStart(2,'0')+':00',duration_minutes:60,location:loc};if(a?.id)b.workout_id=a.id;const d=await api('/sessions',{method:'POST',body:JSON.stringify(b)});if(d.success){toast('Scheduled'+(a?.name?' · '+a.name:''));renderScheduler()}else toast(d.detail||'Error',false)}
+async function showAddSession(){const[cd,wd]=await Promise.all([api('/clients'),api('/workouts/library')]);document.body.insertAdjacentHTML('beforeend',`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal"><h3>Schedule Session</h3><div class="form-group"><label>Client</label><select id="sc">${(cd.clients||[]).map(c=>'<option value="'+c.id+'">'+h(c.name)+'</option>').join('')}</select></div><div class="form-row"><div><label>Date</label><input id="sd" type="date" value="${fmtDateStr(new Date())}"></div><div><label>Time</label><input id="st" type="time" value="09:00"></div></div><div class="form-row"><div><label>Duration</label><input id="su" type="number" value="60"></div><div><label>Workout</label><select id="sw"><option value="">None</option>${(wd.workouts||[]).map(w=>'<option value="'+w.id+'">'+h(w.name)+'</option>').join('')}</select></div></div><div class="form-group"><label>Location</label><select id="sl"><option>offline</option><option>online</option></select></div><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-accent" onclick="addSess()">Schedule</button></div></div></div>`)}
+async function addSess(){const b={client_id:$('sc').value,scheduled_at:$('sd').value+'T'+$('st').value,duration_minutes:parseInt($('su').value)||60,location:$('sl').value};if($('sw').value)b.workout_id=$('sw').value;const d=await api('/sessions',{method:'POST',body:JSON.stringify(b)});closeModal();if(d.success){toast('Scheduled');renderScheduler()}else toast(d.detail||'Error',false)}
+async function delSess(id){if(!confirm('Remove?'))return;await api('/sessions/'+id,{method:'DELETE'});toast('Removed');renderScheduler()}
+async function approveCancelReq(id){await api('/sessions/'+id+'/cancel',{method:'POST',body:JSON.stringify({reason:'Coach approved cancel request'})});toast('Cancel approved');renderScheduler()}
+async function denyCancelReq(id){await api('/sessions/'+id+'/mark-attendance',{method:'POST',body:JSON.stringify({status:'scheduled'})});toast('Cancel denied — session restored');renderScheduler()}
+async function uncancelSess(id){await api('/sessions/'+id+'/mark-attendance',{method:'POST',body:JSON.stringify({status:'scheduled'})});toast('Session restored');renderScheduler()}
+async function schedAtt(sid,st){await api('/sessions/'+sid+'/mark-attendance',{method:'POST',body:JSON.stringify({status:st})});toast(st==='present'?'✓ Present':'✗ Absent');renderScheduler()}
+
+// ─── AVAILABILITY + HOLIDAYS ────────
+async function renderAvailability(){
+  $('app').innerHTML=`<div class="topbar"><h2>Availability & Holidays</h2></div><div class="loading">Loading...</div>`;
+  const ad=await api('/availability');
+  const av=ad.availability||{};const wd=av.working_days||[1,2,3,4,5];const slots=av.slots||[];const holidays=ad.holidays||[];
+  const dn=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  $('app').innerHTML=`<div class="topbar"><h2>Availability & Holidays</h2></div>
+  <div class="grid-2"><div>
+    <div class="card"><div class="card-title">Working Days</div><div id="wdc">${dn.map((d,i)=>'<span class="chip '+(wd.includes(i+1)?'active':'')+'" onclick="this.classList.toggle(\'active\')" data-d="'+(i+1)+'">'+d+'</span>').join('')}</div><button class="btn btn-accent" style="margin-top:8px" onclick="saveDays()">Save Days</button></div>
+    <div class="card"><div class="card-title"><span>Time Slots (${slots.length})</span><button class="btn btn-accent btn-sm" onclick="showAddSlot()">+ Add</button></div>${slots.length?slots.map((s,i)=>'<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bg-3)"><div><strong style="font-size:12px">'+h(s.label||'Slot')+'</strong> <span style="color:var(--text-2);font-size:11px">'+h(s.start||'')+' – '+h(s.end||'')+'</span></div><button class="btn btn-sm btn-red" onclick="delSlot('+i+')">✕</button></div>').join(''):'<div class="empty">No slots configured</div>'}</div>
+  </div><div>
+    <div class="card"><div class="card-title"><span>Holidays (${holidays.length})</span><button class="btn btn-accent btn-sm" onclick="showAddHoliday()">+ Add Holiday</button></div>${holidays.length?holidays.map(x=>'<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bg-3)"><div><strong style="font-size:12px">'+(x.holiday_date||'')+'</strong> <span style="color:var(--text-2);font-size:11px">'+h(x.reason||'')+'</span></div><button class="btn btn-sm btn-red" onclick="delHoliday(\''+x.id+'\')">✕</button></div>').join(''):'<div class="empty">No holidays</div>'}</div>
+  </div></div>`}
+async function saveDays(){const chips=document.querySelectorAll('#wdc .chip');const wd=[];chips.forEach(c=>{if(c.classList.contains('active'))wd.push(parseInt(c.dataset.d))});const ad=await api('/availability');const av=ad.availability||{};const r=await api('/availability',{method:'PUT',body:JSON.stringify({working_days:wd,slots:av.slots||[]})});if(r.success)toast('Days saved');else toast(r.detail||'Error',false)}
+function showAddSlot(){document.body.insertAdjacentHTML('beforeend',`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal"><h3>Add Time Slot</h3><div class="form-group"><label>Label</label><input id="sll" placeholder="Morning Batch"></div><div class="form-row"><div><label>Start</label><input id="sls" type="time" value="09:00"></div><div><label>End</label><input id="sle" type="time" value="12:00"></div></div><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-accent" onclick="addSlot()">Add</button></div></div></div>`)}
+async function addSlot(){const ad=await api('/availability');const av=ad.availability||{};const slots=av.slots||[];slots.push({label:$('sll').value||'Slot',start:$('sls').value,end:$('sle').value});const r=await api('/availability',{method:'PUT',body:JSON.stringify({working_days:av.working_days||[1,2,3,4,5],slots})});closeModal();if(r.success){toast('Slot added');renderAvailability()}else toast(r.detail||'Error',false)}
+async function delSlot(i){const ad=await api('/availability');const av=ad.availability||{};const slots=av.slots||[];slots.splice(i,1);const r=await api('/availability',{method:'PUT',body:JSON.stringify({working_days:av.working_days||[1,2,3,4,5],slots})});if(r.success){toast('Deleted');renderAvailability()}else toast(r.detail||'Error',false)}
+function showAddHoliday(){document.body.insertAdjacentHTML('beforeend',`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal"><h3>Add Holiday</h3><div class="form-group"><label>Date</label><input id="hdd" type="date"></div><div class="form-group"><label>Reason</label><input id="hdr" placeholder="Diwali, Leave..."></div><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-accent" onclick="addHoliday()">Add</button></div></div></div>`)}
+async function addHoliday(){const v=$('hdd').value;if(!v)return toast('Pick a date',false);const d=await api('/holidays',{method:'POST',body:JSON.stringify({date:v,reason:$('hdr').value||''})});closeModal();if(d.success){toast('Holiday added');renderAvailability()}else toast(d.detail||'Error: '+JSON.stringify(d),false)}
+async function delHoliday(id){await api('/holidays/'+id,{method:'DELETE'});toast('Deleted');renderAvailability()}
+
+// ─── WORKOUTS (hierarchical) ────────
+const WK_CATEGORIES={
+  'Strength Training':['Chest','Back','Shoulders','Biceps','Triceps','Legs','Core','Full Body'],
+  'Cardio':['Running','Cycling','Swimming','HIIT','Jump Rope','Rowing'],
+  'Flexibility':['Yoga','Stretching','Pilates','Mobility'],
+  'Functional':['CrossFit','Kettlebell','Bodyweight','Resistance Bands'],
+  'Sports Specific':['Boxing','Martial Arts','Cricket','Football']
+};
+let _allWorkouts=[];
+async function renderWorkouts(){
+  $('app').innerHTML=`<div class="topbar"><h2>Workouts</h2><button class="btn btn-accent" onclick="showAddWk()">+ Add Workout</button></div><div class="loading">Loading...</div>`;
+  const d=await api('/workouts/library');_allWorkouts=d.workouts||[];
+  // Group by category
+  const grouped={};_allWorkouts.forEach(w=>{const cat=w.category||'Other';if(!grouped[cat])grouped[cat]=[];grouped[cat].push(w)});
+  const catHtml=Object.entries(grouped).map(([cat,wks])=>`
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-title" style="cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'':'none'">
+        <span>💪 ${h(cat)} <span class="badge badge-accent">${wks.length}</span></span>
+        <span style="font-size:10px;color:var(--text-3)">▼</span>
+      </div>
+      <div>${wks.map(w=>{
+        const sub=w.description?.includes('[')?w.description.split('[')[1].split(']')[0]:'';
+        return`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bg-3)">
+          <div><strong style="font-size:12px">${h(w.name)}</strong>${sub?'<span class="badge badge-blue" style="margin-left:4px;font-size:9px">'+h(sub)+'</span>':''}
+          <div style="font-size:10px;color:var(--text-2)">${h((w.description||'').replace(/\[.*\]/,'').trim())} · ${w.duration_minutes}min</div></div>
+          <button class="btn btn-sm btn-red" onclick="delWk('${w.id}')">✕</button></div>`}).join('')}
+      </div>
+    </div>`).join('');
+  $('app').innerHTML=`<div class="topbar"><h2>Workouts Library (${_allWorkouts.length})</h2><button class="btn btn-accent" onclick="showAddWk()">+ Add</button></div>${catHtml||'<div class="empty">No workouts. Click + Add.</div>'}`;
+}
+function showAddWk(){
+  const catOpts=Object.keys(WK_CATEGORIES).map(c=>'<option value="'+c+'">'+c+'</option>').join('');
+  document.body.insertAdjacentHTML('beforeend',`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal"><h3>Add Workout</h3>
+  <div class="form-group"><label>Name</label><input id="wn" placeholder="Bench Press 5x5"></div>
+  <div class="form-row"><div><label>Category</label><select id="wc" onchange="updateSubCat()">${catOpts}</select></div>
+  <div><label>Sub-category</label><select id="wsc"><option>General</option></select></div></div>
+  <div class="form-group"><label>Description</label><textarea id="wde" rows="2" placeholder="3 sets of 12 reps, rest 60s..."></textarea></div>
+  <div class="form-group"><label>Duration (min)</label><input id="wdu" type="number" value="45"></div>
+  <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px"><button class="btn" onclick="closeModal()">Cancel</button>
+  <button class="btn btn-accent" onclick="addWk()">Add</button></div></div></div>`);
+  updateSubCat();
+}
+function updateSubCat(){const cat=$('wc').value;const subs=WK_CATEGORIES[cat]||[];$('wsc').innerHTML=subs.map(s=>'<option>'+s+'</option>').join('')+'<option>General</option>'}
+async function addWk(){const sub=$('wsc').value;const desc=($('wde').value||'')+(sub&&sub!=='General'?' ['+sub+']':'');const d=await api('/workouts/library',{method:'POST',body:JSON.stringify({name:$('wn').value,description:desc,category:$('wc').value,duration_minutes:parseInt($('wdu').value)||45})});closeModal();if(d.success){toast('Added');renderWorkouts()}else toast(d.detail||'Error',false)}
+async function delWk(id){if(!confirm('Delete?'))return;await api('/workouts/'+id,{method:'DELETE'});toast('Deleted');renderWorkouts()}
+
+// ─── LEADS (with delete) ────────────
+async function renderLeads(){$('app').innerHTML=`<div class="topbar"><h2>Leads</h2></div><div class="loading">Loading...</div>`;const d=await api('/leads');const leads=(d.leads||[]).filter(l=>l.status!=='archived');const nw=leads.filter(l=>l.status==='new'),cont=leads.filter(l=>l.status==='contacted'),conv=leads.filter(l=>l.status==='converted');
+function lc(l){return'<div class="card" style="padding:8px;margin-bottom:5px"><div style="display:flex;justify-content:space-between"><strong style="font-size:11px">'+h(l.name)+'</strong><div style="display:flex;gap:3px">'+(l.status!=='converted'?'<button class="btn btn-sm" onclick="updateLead(\''+l.id+'\',\'contacted\')">📞</button><button class="btn btn-sm btn-green" onclick="convertLead(\''+l.id+'\')">✓</button>':'')+'<button class="btn btn-sm btn-red" onclick="archiveLead(\''+l.id+'\')" title="Delete">✕</button></div></div><div style="font-size:10px;color:var(--text-2)">'+h(l.phone||'')+(l.email?' · '+h(l.email):'')+'</div>'+(l.message?'<div style="font-size:10px;color:var(--text-3);margin-top:2px">'+h(l.message).substring(0,80)+'</div>':'')+'</div>'}
+$('app').innerHTML=`<div class="topbar"><h2>Leads Pipeline</h2></div><div class="grid-3"><div><div class="card-title"><span class="badge badge-yellow">🆕 New (${nw.length})</span></div>${nw.map(lc).join('')||'<div class="empty" style="padding:16px">—</div>'}</div><div><div class="card-title"><span class="badge badge-blue">📞 Contacted (${cont.length})</span></div>${cont.map(lc).join('')||'<div class="empty" style="padding:16px">—</div>'}</div><div><div class="card-title"><span class="badge badge-green">✅ Converted (${conv.length})</span></div>${conv.map(lc).join('')||'<div class="empty" style="padding:16px">—</div>'}</div></div>`}
+async function updateLead(id,st){await api('/leads/'+id,{method:'PATCH',body:JSON.stringify({status:st})});toast('Updated');renderLeads()}
+async function convertLead(id){if(!confirm('Convert?'))return;const d=await api('/leads/'+id+'/convert',{method:'POST'});if(d.success)toast(d.message||'Converted!');else toast(d.detail||'Error',false);renderLeads()}
+async function archiveLead(id){if(!confirm('Delete this lead?'))return;await api('/leads/'+id,{method:'PATCH',body:JSON.stringify({status:'archived'})});toast('Deleted');renderLeads()}
+
+// ─── PAYMENTS ───────────────────────
+async function renderPayments(){
+  $('app').innerHTML=`<div class="topbar"><h2>Payments</h2><button class="btn btn-accent" onclick="showRazorpay()">💳 Send Payment Link</button></div><div class="loading">Loading...</div>`;
+  const cd=await api('/clients');const clients=cd.clients||[];
+  // Load payment info from localStorage
+  const rows=clients.map(c=>{const p=JSON.parse(localStorage.getItem('cf_fee_'+c.id)||'null');return{...c,payment:p}}).filter(c=>c.payment);
+  $('app').innerHTML=`<div class="topbar"><h2>Payments</h2><button class="btn btn-accent" onclick="showRazorpay()">💳 Send Payment Link</button></div>
+  <div class="card"><div class="card-title">Client Payment Plans</div>
+  ${rows.length?'<table><tr><th>Client</th><th>Plan</th><th>Fee</th><th>Start</th><th>Razorpay</th></tr>'+rows.map(c=>'<tr><td>'+h(c.name)+'</td><td><span class="badge badge-accent">'+(c.payment.plan||'monthly')+'</span></td><td style="font-weight:700">₹'+h(c.payment.fee)+'</td><td style="color:var(--text-2)">'+h(c.payment.start_date||'—')+'</td><td><button class="btn btn-sm btn-accent" onclick="sendRzp(\''+c.id+'\','+c.payment.fee+')">Send Link</button></td></tr>').join('')+'</table>':'<div class="empty">No payment plans. Add fee while creating clients or send Razorpay links below.</div>'}
+  </div>`;
+}
+function showRazorpay(){api('/clients').then(cd=>{const cl=cd.clients||[];document.body.insertAdjacentHTML('beforeend',`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal"><h3>💳 Send Razorpay Link</h3><div class="form-group"><label>Client</label><select id="rzCli">${cl.map(c=>'<option value="'+c.id+'">'+h(c.name)+'</option>').join('')}</select></div><div class="form-group"><label>Amount (₹)</label><input id="rzAmt" type="number" placeholder="5000"></div><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-accent" onclick="sendRzpModal()">Send Link</button></div></div></div>`)})}
+async function sendRzpModal(){const d=await api('/payments/create-razorpay-link',{method:'POST',body:JSON.stringify({client_id:$('rzCli').value,amount:parseFloat($('rzAmt').value)||0})});closeModal();if(d.success){toast('Link: '+d.payment_link);prompt('Payment link (copy):',d.payment_link)}else toast(d.detail||'Error',false)}
+async function sendRzp(cid,amt){const d=await api('/payments/create-razorpay-link',{method:'POST',body:JSON.stringify({client_id:cid,amount:amt})});if(d.success){toast('Link created');prompt('Send this to client:',d.payment_link)}else toast(d.detail||'Error',false)}
+
+// ─── CLIENT PANEL ───────────────────
+async function openClientPanel(clientId){
+  const client=(_allClients.length?_allClients:_clients).find(c=>c.id===clientId);
+  if(!client)return;const m=typeof client.metadata==='string'?JSON.parse(client.metadata):client.metadata||{};
+  const lm=JSON.parse(localStorage.getItem('cf_meta_'+clientId)||'null')||m;
+  const photo=localStorage.getItem('cf_photo_'+clientId);
+  document.body.insertAdjacentHTML('beforeend',`<div class="cli-panel-bg" id="cliPanelBg" onclick="if(event.target===this)closeClientPanel()"><div class="cli-panel" id="cliPanel"><h3>${h(client.name)}<button class="btn btn-sm" onclick="closeClientPanel()">✕</button></h3><div class="loading">Loading...</div></div></div>`);
+  const[sd,wd]=await Promise.all([api('/sessions?client_id='+clientId),api('/workouts/library')]);
+  const sessions=sd.sessions||[];const workouts=wd.workouts||[];
+  const now=new Date();const localAssign=getAssignedWorkout(clientId);const assignId=localAssign?.id||'';const assignName=localAssign?.name||'None';
+  const upcoming=sessions.filter(s=>{const t=parseServerTime(s.scheduled_at);return new Date(t.y,t.mo-1,t.d,t.h,t.mi)>=now&&s.status!=='cancelled'});
+  const past=sessions.filter(s=>{const t=parseServerTime(s.scheduled_at);return new Date(t.y,t.mo-1,t.d,t.h,t.mi)<now||s.status==='completed'||s.status==='no_show'});
+  const fee=JSON.parse(localStorage.getItem('cf_fee_'+clientId)||'null');
+  function si(s){const st=parseServerTime(s.scheduled_at);const attended=s.status==='confirmed'||s.status==='completed';const absent=s.status==='no_show';const badge=attended?'badge-green':absent?'badge-red':'badge-yellow';return`<div class="sess-item"><div style="display:flex;flex-direction:column;gap:2px"><span>${fmtTime(s.scheduled_at)} · ${s.duration_minutes}min</span><span style="color:var(--text-2);font-size:10px">${st.dateStr}</span>${s.workout_name?'<span style="color:var(--accent);font-size:10px;font-weight:600">'+h(s.workout_name)+'</span>':''}</div><span class="badge ${badge}">${attended?'✓ Present':absent?'✗ Absent':s.status}</span></div>`}
+  $('cliPanel').innerHTML=`<h3>${h(client.name)}<button class="btn btn-sm" onclick="closeClientPanel()">✕</button></h3>
+  <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">${photo?'<img src="'+photo+'" style="width:44px;height:44px;border-radius:10px;object-fit:cover;border:1px solid var(--border)">':''}
+  <div><div style="font-size:11px;color:var(--text-2)">${h(client.email||'')}${client.phone?' · '+h(client.phone):''}</div>
+  <div style="font-size:11px;margin-top:2px">${lm.goal?'<span class="badge badge-accent">'+h(lm.goal)+'</span> ':''}<span class="badge badge-blue">${lm.type||'Offline'}</span>${fee?' <span class="badge badge-green">₹'+h(fee.fee)+'/mo</span>':''}</div></div></div>
+
+  ${lm.weight||lm.injuries||lm.diet?`<div style="padding:8px;background:var(--bg-2);border-radius:8px;margin-bottom:10px;font-size:11px">
+  ${lm.weight?'<div>⚖ <strong>Weight:</strong> '+lm.weight+'kg'+(lm.height?' · <strong>Height:</strong> '+lm.height+'cm':'')+'</div>':''}
+  ${lm.injuries?'<div style="color:var(--red)">⚠ <strong>Injuries:</strong> '+h(lm.injuries)+'</div>':''}
+  ${lm.diet?'<div style="color:var(--yellow)">🍽 <strong>Diet:</strong> '+h(lm.diet)+'</div>':''}
+  ${lm.notes?'<div style="color:var(--text-2)">📝 '+h(lm.notes)+'</div>':''}
+  </div>`:''}
+
+  <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap"><button class="btn btn-sm" onclick="closeClientPanel();showEditClient('${clientId}')">✏ Edit</button><button class="btn btn-accent btn-sm" onclick="closeClientPanel();openProgressView('${clientId}')">📊 Progress</button><button class="btn btn-sm" onclick="closeClientPanel();showRecordProgress('${clientId}')">+ Record</button><button class="btn btn-sm" onclick="shareProgress('${clientId}','whatsapp')">📱 WhatsApp</button><button class="btn btn-sm" onclick="shareProgress('${clientId}','email')">📧 Email</button></div>
+
+  <div class="card" style="padding:10px;margin-bottom:10px"><div class="card-title" style="font-size:12px">Mapped Workouts</div>
+  <div id="mappedWkList" style="margin-bottom:6px">${(()=>{const mapped=JSON.parse(localStorage.getItem('cf_wkmap_'+clientId)||'[]');return mapped.length?mapped.map(w=>'<span class="chip active" style="font-size:10px">'+h(w.name)+' <span onclick="unmapWk(\''+clientId+'\',\''+w.id+'\')" style="cursor:pointer;color:var(--red)">✕</span></span>').join(''):'<span style="font-size:10px;color:var(--text-3)">No workouts mapped</span>'})()}</div>
+  <div style="display:flex;gap:6px;align-items:center"><select id="assignWk" style="flex:1;padding:6px;font-size:11px"><option value="">— Select Workout —</option>${workouts.map(w=>'<option value="'+w.id+'">'+h(w.name)+' ('+h(w.category)+')</option>').join('')}</select><button class="btn btn-accent btn-sm" onclick="mapWk('${clientId}')">+ Map</button></div></div>
+  <div class="tab-row"><button class="tab-btn active" onclick="switchTab(this,'upcoming')">Upcoming (${upcoming.length})</button><button class="tab-btn" onclick="switchTab(this,'past')">Past (${past.length})</button></div>
+  <div id="panelUpcoming">${upcoming.length?upcoming.slice(0,20).map(si).join(''):'<div class="empty" style="padding:12px">No upcoming</div>'}</div>
+  <div id="panelPast" style="display:none">${past.length?past.slice(0,30).map(si).join(''):'<div class="empty" style="padding:12px">No past sessions</div>'}</div>
+  <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border)"><div class="grid-3" style="gap:6px"><div style="text-align:center;padding:8px;background:var(--bg-2);border-radius:8px"><div style="font-size:18px;font-weight:800;color:var(--green)">${past.filter(s=>s.status==='confirmed'||s.status==='completed').length}</div><div style="font-size:9px;color:var(--text-3)">Attended</div></div><div style="text-align:center;padding:8px;background:var(--bg-2);border-radius:8px"><div style="font-size:18px;font-weight:800;color:var(--red)">${past.filter(s=>s.status==='no_show').length}</div><div style="font-size:9px;color:var(--text-3)">Absent</div></div><div style="text-align:center;padding:8px;background:var(--bg-2);border-radius:8px"><div style="font-size:18px;font-weight:800;color:var(--accent)">${upcoming.length}</div><div style="font-size:9px;color:var(--text-3)">Upcoming</div></div></div></div>`}
+function closeClientPanel(){document.getElementById('cliPanelBg')?.remove()}
+function showEditClient(cid){
+  const client=(_allClients.length?_allClients:_clients).find(c=>c.id===cid);if(!client)return;
+  const m=typeof client.metadata==='string'?JSON.parse(client.metadata):client.metadata||{};
+  const lm=JSON.parse(localStorage.getItem('cf_meta_'+cid)||'null')||m;
+  document.body.insertAdjacentHTML('beforeend',`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal" style="max-width:480px">
+  <h3>Edit Client — ${h(client.name)}</h3>
+  <div class="form-row"><div class="form-group"><label>Name *</label><input id="ecN" value="${h(client.name||'')}"></div><div class="form-group"><label>Email</label><input id="ecE" type="email" value="${h(client.email||'')}"></div></div>
+  <div class="form-row"><div class="form-group"><label>Phone</label><input id="ecP" value="${h(client.phone||'')}"></div><div class="form-group"><label>Goal</label><input id="ecG" value="${h(lm.goal||'')}"></div></div>
+  <div class="form-row"><div class="form-group"><label>Type</label><select id="ecT"><option ${(lm.type||'').toLowerCase()==='online'?'':'selected'}>Offline</option><option ${(lm.type||'').toLowerCase()==='online'?'selected':''}>Online</option></select></div><div class="form-group"><label>Monthly Fee (₹)</label><input id="ecF" type="number" value="${(JSON.parse(localStorage.getItem('cf_fee_'+cid)||'null')||{}).fee||''}"></div></div>
+  <div class="form-row"><div class="form-group"><label>Weight (kg)</label><input id="ecW" type="number" step="0.1" value="${lm.weight||''}"></div><div class="form-group"><label>Height (cm)</label><input id="ecH" type="number" value="${lm.height||''}"></div></div>
+  <div class="form-group"><label>Injuries / Medical</label><input id="ecI" value="${h(lm.injuries||'')}"></div>
+  <div class="form-group"><label>Diet Restrictions</label><input id="ecD" value="${h(lm.diet||'')}"></div>
+  <div class="form-group"><label>Notes</label><textarea id="ecNo" rows="2">${h(lm.notes||'')}</textarea></div>
+  <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-accent" onclick="saveEditClient('${cid}')">Save Changes</button></div>
+  </div></div>`);
+}
+async function saveEditClient(cid){
+  const name=$('ecN').value;if(!name)return toast('Name required',false);
+  const r=await api('/clients/'+cid,{method:'PUT',body:JSON.stringify({name,email:$('ecE').value,phone:$('ecP').value,goal:$('ecG').value,type:$('ecT').value,weight:$('ecW').value||null,height:$('ecH').value||null})});
+  const meta={goal:$('ecG').value,type:$('ecT').value,weight:$('ecW').value,height:$('ecH').value,injuries:$('ecI').value,diet:$('ecD').value,notes:$('ecNo').value};
+  localStorage.setItem('cf_meta_'+cid,JSON.stringify(meta));
+  if($('ecF').value)localStorage.setItem('cf_fee_'+cid,JSON.stringify({fee:$('ecF').value}));
+  await api('/clients/'+cid+'/metadata',{method:'PUT',body:JSON.stringify(meta)});
+  closeModal();toast(r.success?'Client updated':'Error: '+(r.detail||''),r.success);renderClients();
+}
+function switchTab(btn,tab){btn.parentElement.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');$('panelUpcoming').style.display=tab==='upcoming'?'':'none';$('panelPast').style.display=tab==='past'?'':'none'}
+function mapWk(cid){const sel=$('assignWk');const id=sel.value;if(!id)return toast('Select a workout',false);const nm=sel.selectedOptions[0].textContent.split(' (')[0].trim();const mapped=JSON.parse(localStorage.getItem('cf_wkmap_'+cid)||'[]');if(mapped.find(w=>w.id===id))return toast('Already mapped',false);mapped.push({id,name:nm});localStorage.setItem('cf_wkmap_'+cid,JSON.stringify(mapped));localStorage.setItem('cf_assign_'+cid,JSON.stringify({id,name:nm}));toast('Mapped: '+nm);closeClientPanel();openClientPanel(cid)}
+function unmapWk(cid,wid){let mapped=JSON.parse(localStorage.getItem('cf_wkmap_'+cid)||'[]');mapped=mapped.filter(w=>w.id!==wid);localStorage.setItem('cf_wkmap_'+cid,JSON.stringify(mapped));if(mapped.length)localStorage.setItem('cf_assign_'+cid,JSON.stringify(mapped[0]));else localStorage.removeItem('cf_assign_'+cid);toast('Removed');closeClientPanel();openClientPanel(cid)}
+
+async function shareProgress(clientId,method){
+  const client=(_allClients.length?_allClients:_clients).find(c=>c.id===clientId);if(!client)return;
+  const pd=await api('/progress/'+clientId);const records=pd.records||[];
+  const sd=await api('/sessions?client_id='+clientId);const sessions=sd.sessions||[];
+  const attended=sessions.filter(s=>s.status==='confirmed'||s.status==='completed').length;
+  const total=sessions.filter(s=>s.status!=='cancelled').length;
+  const latest=records[0];const met=latest?(typeof latest.metrics==='string'?JSON.parse(latest.metrics):latest.metrics):{};
+  const mapped=JSON.parse(localStorage.getItem('cf_wkmap_'+clientId)||'[]');
+
+  let msg=`📊 *${client.name} — Progress Report*\n`;
+  msg+=`📅 Date: ${new Date().toLocaleDateString('en-IN')}\n\n`;
+  if(met.weight)msg+=`⚖ Current Weight: ${met.weight}kg\n`;
+  if(latest?.recorded_at)msg+=`📏 Last Measured: ${latest.recorded_at.split(' ')[0]||latest.recorded_at.split('T')[0]}\n`;
+  const ms=met.measurements||{};
+  if(Object.keys(ms).length){msg+=`\n📐 *Measurements:*\n`;Object.entries(ms).filter(([k,v])=>v).forEach(([k,v])=>{msg+=`  ${k}: ${v}cm\n`})}
+  msg+=`\n🏋️ *Attendance:* ${attended}/${total} sessions (${total?Math.round(attended/total*100):0}%)\n`;
+  if(mapped.length){msg+=`\n💪 *Workouts:* ${mapped.map(w=>w.name).join(', ')}\n`}
+  msg+=`\n— CoachFlow`;
+
+  if(method==='whatsapp'){
+    const phone=(client.phone||'').replace(/[^0-9]/g,'');
+    const url=phone?'https://wa.me/'+phone+'?text='+encodeURIComponent(msg):'https://wa.me/?text='+encodeURIComponent(msg);
+    window.open(url,'_blank');toast('Opening WhatsApp...');
+  } else {
+    const subject='Progress Report — '+client.name;
+    const url='mailto:'+(client.email||'')+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(msg.replace(/\*/g,''));
+    window.open(url);toast('Opening Email...');
+  }
+}
+
+// ─── REPLICATE ──────────────────────
+let _repSessions=[];
+async function showReplicateDay(){const days=getWeekDays(_weekOffset);const dn=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];const dayStrs=days.map(fmtDateStr);const sd=await api('/sessions');_repSessions=sd.sessions||[];const counts=dayStrs.map(ds=>_repSessions.filter(s=>parseServerTime(s.scheduled_at).dateStr===ds&&s.status!=='cancelled').length);const def4w=new Date();def4w.setDate(def4w.getDate()+28);
+document.body.insertAdjacentHTML('beforeend',`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal"><h3>📋 Replicate Schedule</h3><p style="font-size:11px;color:var(--text-2);margin-bottom:10px">Copy a day's sessions to other days, optionally repeating weekly.</p>
+<div class="form-group"><label>Source day</label><select id="repFrom">${dn.map((d,i)=>'<option value="'+i+'">'+d+' ('+counts[i]+' sessions)</option>').join('')}</select></div>
+<div class="form-group"><label>Mode</label><div style="display:flex;gap:8px;margin-top:4px"><label style="font-size:11px;cursor:pointer"><input type="radio" name="repMode" value="week" checked onchange="$('repUW').style.display='none'"> This week</label><label style="font-size:11px;cursor:pointer"><input type="radio" name="repMode" value="until" onchange="$('repUW').style.display=''"> Weekly until date</label></div></div>
+<div id="repUW" class="form-group" style="display:none"><label>Until</label><input id="repUntil" type="date" value="${fmtDateStr(def4w)}"></div>
+<div class="form-group"><label>Target days</label><div id="repTo">${dn.map((d,i)=>'<span class="chip" onclick="this.classList.toggle(\'active\')" data-dow="'+i+'">'+d+'</span>').join('')}</div></div>
+<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-accent" onclick="doReplicate()">Replicate</button></div></div></div>`)}
+async function doReplicate(){
+  const fromIdx=parseInt($('repFrom').value);const days=getWeekDays(_weekOffset);const dayStrs=days.map(fmtDateStr);const fromDay=dayStrs[fromIdx];
+  const mode=document.querySelector('input[name=repMode]:checked').value;
+  const tDows=[];document.querySelectorAll('#repTo .chip.active').forEach(c=>tDows.push(parseInt(c.dataset.dow)));
+  if(!tDows.length)return toast('Select target days',false);
+  const src=_repSessions.filter(s=>parseServerTime(s.scheduled_at).dateStr===fromDay&&s.status!=='cancelled');
+  if(!src.length)return toast('No sessions on source',false);
+  const bulk=[];
+  if(mode==='week'){tDows.forEach(dow=>{if(dow===fromIdx)return;src.forEach(s=>{const t=parseServerTime(s.scheduled_at);bulk.push({client_id:s.client_id,scheduled_at:dayStrs[dow]+'T'+String(t.h).padStart(2,'0')+':'+String(t.mi).padStart(2,'0'),duration_minutes:s.duration_minutes,workout_id:s.session_template_id||null})})})}
+  else{const until=new Date($('repUntil').value+'T23:59');if(!until)return toast('Set date',false);
+    // For each target dow + source dow, generate weekly
+    const allDows=[...new Set([...tDows,fromIdx])];
+    allDows.forEach(dow=>{let d=new Date(dayStrs[dow]);if(dow===fromIdx)d.setDate(d.getDate()+7);while(d<=until){const ds=fmtDateStr(d);src.forEach(s=>{const t=parseServerTime(s.scheduled_at);bulk.push({client_id:s.client_id,scheduled_at:ds+'T'+String(t.h).padStart(2,'0')+':'+String(t.mi).padStart(2,'0'),duration_minutes:s.duration_minutes,workout_id:s.session_template_id||null})});d.setDate(d.getDate()+7)}})}
+  if(!bulk.length)return toast('Nothing to create',false);
+  if(bulk.length>50&&!confirm(bulk.length+' sessions will be created. Continue?'))return;
+  const d=await api('/schedule/bulk-plan',{method:'POST',body:JSON.stringify({sessions:bulk})});closeModal();
+  if(d.success)toast(d.message||bulk.length+' sessions created');else toast(d.detail||'Error',false);renderScheduler()}
+
+// ─── PROGRESS TRACKING ──────────────
+let _progressClient=null;
+async function renderProgress(){
+  $('app').innerHTML=`<div class="topbar"><h2>Progress Tracker</h2></div><div class="loading">Loading clients...</div>`;
+  const cd=await api('/clients');const clients=cd.clients||[];
+  $('app').innerHTML=`<div class="topbar"><h2>📊 Progress Tracker</h2></div>
+  <div class="card"><div class="card-title">Select Client</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">${clients.map(c=>`<button class="btn" onclick="openProgressView('${c.id}')" style="display:flex;align-items:center;gap:4px">${(()=>{const ph=localStorage.getItem('cf_photo_'+c.id);return ph?'<img src="'+ph+'" style="width:20px;height:20px;border-radius:4px;object-fit:cover">':'<span style="width:20px;height:20px;border-radius:4px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:9px;color:#000;font-weight:700">'+(c.name||'?')[0]+'</span>'})()}${h(c.name?.split(' ')[0])}</button>`).join('')}</div></div>
+  ${_progressClient?'':'<div class="empty" style="padding:40px">Select a client to view or record progress</div>'}`;
+}
+
+async function openProgressView(clientId){
+  _progressClient=clientId;
+  const client=(_allClients.length?_allClients:(_clients||[])).find(c=>c.id===clientId);
+  const name=client?.name||'Client';
+  const m=client?.metadata?(typeof client.metadata==='string'?JSON.parse(client.metadata):client.metadata):{};
+  const lm=JSON.parse(localStorage.getItem('cf_meta_'+clientId)||'null')||m;
+  const photo=localStorage.getItem('cf_photo_'+clientId);
+  const fee=JSON.parse(localStorage.getItem('cf_fee_'+clientId)||'null');
+  const startDate=lm.start_date||fee?.start_date||client?.created_at?.split('T')[0]||'';
+
+  $('app').innerHTML=`<div class="topbar"><h2>📊 ${h(name)}</h2><div style="display:flex;gap:6px"><button class="btn" onclick="renderProgress()">← Back</button><button class="btn btn-accent" onclick="showRecordProgress('${clientId}')">+ Record Progress</button></div></div><div class="loading">Loading...</div>`;
+
+  const pd=await api('/progress/'+clientId);
+  const records=(pd.records||[]).map(r=>{r.metrics=typeof r.metrics==='string'?JSON.parse(r.metrics):r.metrics||{};return r});
+  const sorted=[...records].reverse();
+  const photos=[];for(let i=0;i<50;i++){const ph=localStorage.getItem('cf_progress_photo_'+clientId+'_'+i);if(ph){const dt=localStorage.getItem('cf_progress_photo_date_'+clientId+'_'+i);photos.push({src:ph,date:dt||''})}}
+
+  function extract(key,isMeas){return sorted.map(r=>{const v=isMeas?(r.metrics.measurements||{})[key]:r.metrics[key];return v?{val:parseFloat(v),date:(r.recorded_at||'').slice(0,10)}:null}).filter(Boolean)}
+  const params=[];
+  const wData=extract('weight',false);if(wData.length)params.push({name:'Weight',unit:'kg',data:wData,lowerBetter:true});
+  const bfData=extract('Body Fat %',true);if(bfData.length)params.push({name:'Body Fat',unit:'%',data:bfData,lowerBetter:true});
+  [{key:'Chest',lb:false},{key:'Waist',lb:true},{key:'Hips',lb:true},{key:'Bicep L',lb:false},{key:'Bicep R',lb:false},{key:'Thigh',lb:false},{key:'Calf',lb:false},{key:'Forearm',lb:false}].forEach(mk=>{const data=extract(mk.key,true);if(data.length)params.push({name:mk.key,unit:'cm',data:data,lowerBetter:mk.lb})});
+
+  function buildChart(p){
+    const data=p.data;const n=data.length;if(n<1)return '';
+    const vals=data.map(d=>d.val);const minV=Math.min(...vals);const maxV=Math.max(...vals);const range=maxV-minV||1;
+    const first=vals[0];const last=vals[n-1];const diff=last-first;const pctChange=first?((diff/first)*100).toFixed(1):0;
+    let statusColor,statusIcon,statusLabel;
+    if(Math.abs(pctChange)<0.5){statusColor='var(--yellow)';statusIcon='→';statusLabel='No Change'}
+    else if((p.lowerBetter&&diff<0)||(!p.lowerBetter&&diff>0)){statusColor='var(--green)';statusIcon='↑';statusLabel='Improved'}
+    else{statusColor='var(--red)';statusIcon='↓';statusLabel='Needs Work'}
+    const w=320,ht=90,pad=4,chartW=w-pad*2,chartH=ht-pad*2;
+    const points=data.map((d,i)=>({x:pad+(n>1?(i/(n-1))*chartW:chartW/2),y:pad+chartH-(((d.val-minV)/range)*chartH)}));
+    const pathD=points.map((pt,i)=>(i===0?'M':'L')+pt.x.toFixed(1)+','+pt.y.toFixed(1)).join(' ');
+    const areaD=pathD+' L'+points[points.length-1].x.toFixed(1)+','+(ht-pad)+' L'+points[0].x.toFixed(1)+','+(ht-pad)+' Z';
+    const dots=points.map((pt,i)=>'<circle cx="'+pt.x.toFixed(1)+'" cy="'+pt.y.toFixed(1)+'" r="3" fill="'+statusColor+'"/>').join('');
+    const gid='cg_'+p.name.replace(/\s/g,'');
+    return`<div class="card" style="padding:12px;margin-bottom:8px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div><strong style="font-size:13px">${p.name}</strong><span style="font-size:10px;color:var(--text-3);margin-left:4px">(${p.unit})</span></div><div style="display:flex;align-items:center;gap:6px"><span style="font-size:18px;font-weight:800">${last}${p.unit}</span><span style="background:${statusColor}22;color:${statusColor};padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700">${statusIcon} ${statusLabel}</span></div></div>${n>1?'<svg viewBox="0 0 '+w+' '+ht+'" style="width:100%;height:90px;display:block"><defs><linearGradient id="'+gid+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+statusColor+'" stop-opacity="0.3"/><stop offset="100%" stop-color="'+statusColor+'" stop-opacity="0.02"/></linearGradient></defs><path d="'+areaD+'" fill="url(#'+gid+')"/><path d="'+pathD+'" fill="none" stroke="'+statusColor+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'+dots+'</svg><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-3);margin-top:2px"><span>'+data[0].date.slice(5)+'</span><span>'+data[n-1].date.slice(5)+'</span></div>':'<div style="text-align:center;font-size:10px;color:var(--text-3);padding:8px">1 record — needs 2+ for chart</div>'}<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-2);margin-top:6px;padding-top:6px;border-top:1px solid var(--border)"><span>Start: <strong>${first}${p.unit}</strong></span><span>Change: <strong style="color:${statusColor}">${diff>0?'+':''}${diff.toFixed(1)}${p.unit} (${pctChange>0?'+':''}${pctChange}%)</strong></span><span>Latest: <strong>${last}${p.unit}</strong></span></div></div>`;
+  }
+
+  const improved=params.filter(p=>{const d=p.data;const diff=d[d.length-1].val-d[0].val;const pct=d[0].val?Math.abs((diff/d[0].val)*100):0;return pct>=0.5&&((p.lowerBetter&&diff<0)||(!p.lowerBetter&&diff>0))}).length;
+  const needsWork=params.filter(p=>{const d=p.data;const diff=d[d.length-1].val-d[0].val;const pct=d[0].val?Math.abs((diff/d[0].val)*100):0;return pct>=0.5&&((p.lowerBetter&&diff>0)||(!p.lowerBetter&&diff<0))}).length;
+  const noChange=params.length-improved-needsWork;
+
+  $('app').innerHTML=`<div class="topbar"><h2>📊 ${h(name)}'s Journey</h2><div style="display:flex;gap:6px"><button class="btn" onclick="renderProgress()">← Back</button><button class="btn btn-accent" onclick="showRecordProgress('${clientId}')">+ Record</button></div></div>
+  <div class="card" style="margin:10px"><div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">${photo?'<img src="'+photo+'" style="width:56px;height:56px;border-radius:12px;object-fit:cover;border:2px solid var(--border)">':'<div style="width:56px;height:56px;border-radius:12px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:24px;color:#000;font-weight:800">'+(name[0])+'</div>'}<div><div style="font-size:16px;font-weight:700">${h(name)}</div><div style="font-size:11px;color:var(--text-2)">${h(lm.goal||'')} · Since ${startDate||'—'}</div>${lm.injuries?'<div style="font-size:10px;color:var(--red)">⚠ '+h(lm.injuries)+'</div>':''}${lm.diet?'<div style="font-size:10px;color:var(--yellow)">🍽 '+h(lm.diet)+'</div>':''}</div></div>
+  <div class="grid-3" style="gap:6px;margin-bottom:6px"><div style="text-align:center;padding:10px;background:var(--bg-2);border-radius:8px"><div style="font-size:20px;font-weight:800;color:var(--green)">${improved}</div><div style="font-size:9px;color:var(--text-3)">Improved</div></div><div style="text-align:center;padding:10px;background:var(--bg-2);border-radius:8px"><div style="font-size:20px;font-weight:800;color:var(--yellow)">${noChange}</div><div style="font-size:9px;color:var(--text-3)">No Change</div></div><div style="text-align:center;padding:10px;background:var(--bg-2);border-radius:8px"><div style="font-size:20px;font-weight:800;color:var(--red)">${needsWork}</div><div style="font-size:9px;color:var(--text-3)">Needs Work</div></div></div>
+  <div class="grid-4" style="gap:6px"><div style="text-align:center;padding:8px;background:var(--bg-2);border-radius:8px"><div style="font-size:16px;font-weight:800;color:var(--accent)">${wData.length?wData[wData.length-1].val:'—'}</div><div style="font-size:9px;color:var(--text-3)">Current kg</div></div><div style="text-align:center;padding:8px;background:var(--bg-2);border-radius:8px"><div style="font-size:16px;font-weight:800;color:var(--blue)">${records.length}</div><div style="font-size:9px;color:var(--text-3)">Records</div></div><div style="text-align:center;padding:8px;background:var(--bg-2);border-radius:8px"><div style="font-size:16px;font-weight:800;color:var(--green)">${lm.height||'—'}</div><div style="font-size:9px;color:var(--text-3)">Height cm</div></div><div style="text-align:center;padding:8px;background:var(--bg-2);border-radius:8px"><div style="font-size:16px;font-weight:800">${fee?'₹'+fee.fee:'—'}</div><div style="font-size:9px;color:var(--text-3)">Fee/mo</div></div></div></div>
+  <div class="grid-2" style="padding:0 10px"><div>${params.map(buildChart).join('')}</div><div>
+    <div class="card"><div class="card-title"><span>Measurements Log (${records.length})</span></div>
+    ${records.length?records.map(r=>{const met=r.metrics;const ms=met.measurements||{};return'<div style="padding:8px;border-bottom:1px solid var(--bg-3);font-size:11px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><strong>'+(r.recorded_at?.split(' ')[0]||r.recorded_at?.split('T')[0]||'—')+'</strong>'+(met.weight?'<span class="badge badge-accent">'+met.weight+'kg</span>':'')+'</div><div style="display:flex;flex-wrap:wrap;gap:4px">'+Object.entries(ms).filter(([k,v])=>v).map(([k,v])=>'<span class="badge badge-blue" style="font-size:9px">'+h(k)+': '+v+'</span>').join('')+'</div>'+(r.notes?'<div style="font-size:10px;color:var(--text-3);margin-top:2px">'+h(r.notes)+'</div>':'')+'</div>'}).join(''):'<div class="empty" style="padding:16px">No records yet</div>'}
+    </div>
+    ${photos.length?'<div class="card"><div class="card-title">Progress Photos</div><div style="display:flex;gap:6px;flex-wrap:wrap">'+photos.map(p=>'<div style="position:relative"><img src="'+p.src+'" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid var(--border)"><div style="position:absolute;bottom:2px;left:2px;background:rgba(0,0,0,.7);color:#fff;font-size:8px;padding:1px 4px;border-radius:4px">'+p.date+'</div></div>').join('')+'</div></div>':''}
+  </div></div>`;
+}
+
+function showRecordProgress(clientId){
+  document.body.insertAdjacentHTML('beforeend',`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal" style="max-width:500px"><h3>📊 Record Progress</h3>
+  <div class="form-row"><div><label>Date</label><input id="prDate" type="date" value="${fmtDateStr(new Date())}"></div><div><label>Weight (kg)</label><input id="prWt" type="number" step="0.1" placeholder="74.5"></div></div>
+  <div style="font-size:11px;font-weight:600;margin:8px 0 4px;color:var(--text-1)">Body Measurements (cm)</div>
+  <div class="grid-3" style="gap:6px">
+    <div><label>Chest</label><input id="prChest" type="number" step="0.5" placeholder="cm"></div>
+    <div><label>Waist</label><input id="prWaist" type="number" step="0.5"></div>
+    <div><label>Hips</label><input id="prHips" type="number" step="0.5"></div>
+    <div><label>Bicep (L)</label><input id="prBicepL" type="number" step="0.5"></div>
+    <div><label>Bicep (R)</label><input id="prBicepR" type="number" step="0.5"></div>
+    <div><label>Thigh</label><input id="prThigh" type="number" step="0.5"></div>
+    <div><label>Calf</label><input id="prCalf" type="number" step="0.5"></div>
+    <div><label>Forearm</label><input id="prForearm" type="number" step="0.5"></div>
+    <div><label>Body Fat %</label><input id="prBF" type="number" step="0.1"></div>
+  </div>
+  <div class="form-group" style="margin-top:8px"><label>Notes</label><textarea id="prNotes" rows="2" placeholder="Observations, changes..."></textarea></div>
+  <div class="form-group"><label>Progress Photo</label><input id="prPhoto" type="file" accept="image/*"></div>
+  <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px"><button class="btn" onclick="closeModal()">Cancel</button>
+  <button class="btn btn-accent" onclick="saveProgress('${clientId}')">Save Record</button></div></div></div>`);
+}
+
+async function saveProgress(clientId){
+  const measurements={};
+  ['Chest','Waist','Hips','BicepL','BicepR','Thigh','Calf','Forearm','BF'].forEach(k=>{
+    const v=$('pr'+k)?.value;if(v)measurements[k.replace('BicepL','Bicep L').replace('BicepR','Bicep R').replace('BF','Body Fat %')]=parseFloat(v)});
+  const wt=$('prWt').value?parseFloat($('prWt').value):null;
+  const d=await api('/progress/upload',{method:'POST',body:JSON.stringify({
+    client_id:clientId,weight:wt,measurements,
+    date:$('prDate').value,notes:$('prNotes').value||''
+  })});
+  // Save photo locally
+  const photoInp=$('prPhoto');
+  if(photoInp&&photoInp.files[0]){
+    const b64=await new Promise(r=>{const rd=new FileReader();rd.onload=e=>r(e.target.result);rd.readAsDataURL(photoInp.files[0])});
+    // Find next available photo slot
+    let slot=0;while(localStorage.getItem('cf_progress_photo_'+clientId+'_'+slot)&&slot<50)slot++;
+    localStorage.setItem('cf_progress_photo_'+clientId+'_'+slot,b64);
+    localStorage.setItem('cf_progress_photo_date_'+clientId+'_'+slot,$('prDate').value);
+  }
+  closeModal();
+  if(d.success){toast('Progress recorded');openProgressView(clientId)}else toast(d.detail||'Error',false);
+}
+
+// ─── ROUTER ─────────────────────────
+function render(){({dashboard:renderDashboard,clients:renderClients,scheduler:renderScheduler,availability:renderAvailability,workouts:renderWorkouts,progress:renderProgress,leads:renderLeads,payments:renderPayments}[SCREEN]||renderDashboard)()}
+function renderApp(){if(!USER)renderLogin();else{renderRail();render()}}
+// ─── AI COMMAND AGENT ────────────────
+let _aiOpen=false,_aiMessages=[],_aiBusy=false;
+const AI_SUGGESTIONS=['Add client Rahul 9876543210 online','Schedule Aparna tomorrow 7am','Mark all today present','Cancel all sessions on Saturday','Show attendance summary','Add 3 clients from this list'];
+
+function renderAIFab(){
+  if(!USER)return;
+  if(!document.getElementById('aiFab')){
+    document.body.insertAdjacentHTML('beforeend','<button class="ai-fab" id="aiFab" onclick="toggleAI()" title="AI Assistant (Ctrl+K)">✨</button>');
+  }
+}
+
+function toggleAI(){
+  if(_aiOpen)closeAI();else openAI();
+}
+
+function openAI(){
+  _aiOpen=true;
+  document.getElementById('aiFab').style.display='none';
+  if(_aiMessages.length===0){
+    _aiMessages.push({role:'system',text:'Hi! I can help you manage clients, schedule sessions, mark attendance, and more. Just type naturally.'});
+  }
+  const panel=document.createElement('div');panel.className='ai-panel';panel.id='aiPanel';
+  panel.innerHTML=`<div class="ai-header"><h3>✨ CoachFlow AI</h3><div style="display:flex;gap:6px"><button class="btn btn-sm" onclick="_aiMessages=[];openAI()" title="Clear">🗑</button><button class="btn btn-sm" onclick="closeAI()">✕</button></div></div><div class="ai-messages" id="aiMsgs"></div><div class="ai-suggestions" id="aiSugs"></div><div class="ai-input-row"><textarea id="aiIn" rows="1" placeholder="Add client, schedule session, mark attendance..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAI()}"></textarea><button onclick="sendAI()" id="aiSend">→</button></div>`;
+  document.body.appendChild(panel);
+  renderAIMessages();
+  renderAISuggestions();
+  setTimeout(()=>document.getElementById('aiIn')?.focus(),100);
+}
+
+function closeAI(){
+  _aiOpen=false;
+  document.getElementById('aiPanel')?.remove();
+  document.getElementById('aiFab').style.display='flex';
+}
+
+function renderAIMessages(){
+  const c=document.getElementById('aiMsgs');if(!c)return;
+  c.innerHTML=_aiMessages.map(m=>`<div class="ai-msg ${m.role}">${m.text}</div>`).join('');
+  c.scrollTop=c.scrollHeight;
+}
+
+function renderAISuggestions(){
+  const c=document.getElementById('aiSugs');if(!c)return;
+  if(_aiMessages.length<=1){
+    c.innerHTML=AI_SUGGESTIONS.map(s=>`<span class="ai-sug" onclick="document.getElementById('aiIn').value='${s}';sendAI()">${s}</span>`).join('');
+  }else c.innerHTML='';
+}
+
+async function sendAI(){
+  const inp=document.getElementById('aiIn');
+  const text=(inp?.value||'').trim();
+  if(!text||_aiBusy)return;
+  inp.value='';_aiBusy=true;
+  document.getElementById('aiSend').disabled=true;
+  _aiMessages.push({role:'user',text:h(text)});
+  renderAIMessages();renderAISuggestions();
+
+  // Show typing indicator
+  const msgs=document.getElementById('aiMsgs');
+  msgs.insertAdjacentHTML('beforeend','<div class="ai-typing" id="aiTyping"><span></span><span></span><span></span></div>');
+  msgs.scrollTop=msgs.scrollHeight;
+
+  try{
+    // Build history for context
+    const history=_aiMessages.filter(m=>m.role==='user'||m.role==='ai').slice(-6).map(m=>({
+      role:m.role==='ai'?'assistant':'user',
+      content:m.role==='ai'?(m.rawText||m.text.replace(/<[^>]+>/g,'')):m.text.replace(/<[^>]+>/g,'')
+    }));
+
+    // Call backend AI proxy
+    const aiResp=await api('/ai/command',{method:'POST',body:JSON.stringify({prompt:text,history:history})});
+    document.getElementById('aiTyping')?.remove();
+
+    if(!aiResp.success&&aiResp.detail){
+      throw new Error(aiResp.detail);
+    }
+    const parsed=aiResp.response||{message:'No response',actions:[]};
+
+    // Execute actions
+    let resultHtml=h(parsed.message||'Done');
+    const actions=parsed.actions||[];
+    if(actions.length>0){
+      resultHtml+='<div style="margin-top:6px">';
+      for(const act of actions){
+        try{
+          const res=await executeAIAction(act);
+          resultHtml+=`<div style="margin:3px 0"><span class="action-tag">${act.type.replace('_',' ')}</span> <span class="action-ok">✓ ${h(res)}</span></div>`;
+        }catch(e){
+          resultHtml+=`<div style="margin:3px 0"><span class="action-tag">${act.type.replace('_',' ')}</span> <span class="action-err">✗ ${h(e.message||e)}</span></div>`;
+        }
+      }
+      resultHtml+='</div>';
+    }
+
+    _aiMessages.push({role:'ai',text:resultHtml,rawText:aiResp.raw||parsed.message||''});
+    renderAIMessages();
+
+    // Refresh relevant screens
+    if(actions.some(a=>a.type==='add_client'||a.type==='update_client'))setTimeout(()=>{if(SCREEN==='clients')renderClients()},300);
+    if(actions.some(a=>a.type==='schedule_session'||a.type==='cancel_session'))setTimeout(()=>{if(SCREEN==='scheduler')renderScheduler()},300);
+    if(actions.some(a=>a.type==='mark_attendance'))setTimeout(()=>{if(SCREEN==='scheduler')renderScheduler();if(SCREEN==='dashboard')renderDashboard()},300);
+
+  }catch(e){
+    document.getElementById('aiTyping')?.remove();
+    _aiMessages.push({role:'ai',text:'⚠ Error: '+h(e.message||'Something went wrong. Try again.')});
+    renderAIMessages();
+  }
+  _aiBusy=false;
+  document.getElementById('aiSend').disabled=false;
+  document.getElementById('aiIn')?.focus();
+}
+
+async function executeAIAction(act){
+  const p=act.params||{};
+  switch(act.type){
+    case 'add_client':{
+      if(!p.name)throw 'Name required';
+      const r=await api('/clients',{method:'POST',body:JSON.stringify({name:p.name,email:p.email||'',phone:p.phone||'',goal:p.goal||'',type:p.type||'Offline'})});
+      if(!r.success)throw r.detail||'Failed';
+      // Save metadata
+      if(p.goal||p.type){
+        const meta={goal:p.goal||'',type:p.type||'Offline'};
+        await api('/clients/'+r.client.id+'/metadata',{method:'PUT',body:JSON.stringify(meta)});
+        localStorage.setItem('cf_meta_'+r.client.id,JSON.stringify(meta));
+      }
+      return `Added ${p.name}`;
+    }
+    case 'schedule_session':{
+      if(!p.client_id)throw 'Client not found';
+      const dt=p.date+'T'+(p.time||'07:00');
+      const r=await api('/sessions',{method:'POST',body:JSON.stringify({client_id:p.client_id,scheduled_at:dt,duration_minutes:p.duration||60,location:p.location||'offline'})});
+      if(!r.success)throw r.detail||'Failed';
+      return `Scheduled ${p.date} ${p.time||'07:00'}`;
+    }
+    case 'mark_attendance':{
+      if(!p.session_id)throw 'Session not found';
+      const r=await api('/sessions/'+p.session_id+'/mark-attendance',{method:'POST',body:JSON.stringify({status:p.status||'present'})});
+      if(!r.success)throw r.detail||'Failed';
+      return `Marked ${p.status||'present'}`;
+    }
+    case 'cancel_session':{
+      if(!p.session_id)throw 'Session not found';
+      const r=await api('/sessions/'+p.session_id+'/cancel',{method:'POST',body:JSON.stringify({reason:p.reason||'Cancelled via AI'})});
+      if(!r.success)throw r.detail||'Failed';
+      return 'Cancelled';
+    }
+    case 'update_client':{
+      if(!p.client_id)throw 'Client not found';
+      const body={};
+      if(p.name)body.name=p.name;
+      if(p.email)body.email=p.email;
+      if(p.phone)body.phone=p.phone;
+      if(p.goal)body.goal=p.goal;
+      if(p.type)body.type=p.type;
+      const r=await api('/clients/'+p.client_id,{method:'PUT',body:JSON.stringify(body)});
+      if(!r.success)throw r.detail||'Failed';
+      if(p.goal||p.type){
+        const meta={goal:p.goal||'',type:p.type||''};
+        await api('/clients/'+p.client_id+'/metadata',{method:'PUT',body:JSON.stringify(meta)});
+      }
+      return `Updated ${p.name||'client'}`;
+    }
+    case 'none': return parsed?.message||'Info only';
+    default: return 'Unknown action';
+  }
+}
+
+// Keyboard shortcut
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();if(USER)toggleAI()}
+});
+
+// Inject FAB after login
+const _origRenderApp=renderApp;
+renderApp=function(){_origRenderApp();if(USER)renderAIFab()};
+renderApp();
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!USER&&$('lP'))doLogin()});
 </script>
 </body>
 </html>

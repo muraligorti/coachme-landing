@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>CoachFlow — My Portal</title>
+<meta name="theme-color" content="#0c0f14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg-0:#0c0f14;--bg-1:#12161e;--bg-2:#191f2b;--bg-3:#212938;--border:#2a3347;--accent:#e8a838;--green:#34d399;--red:#f87171;--yellow:#fbbf24;--blue:#60a5fa;--text-0:#f4f0eb;--text-1:#c8c2b8;--text-2:#8a8477;--text-3:#5e5a52;--font:'Outfit',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font);background:var(--bg-0);color:var(--text-0);min-height:100vh;max-width:480px;margin:0 auto;padding:0 0 80px}
+.header{background:var(--bg-1);border-bottom:1px solid var(--border);padding:14px 16px;position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between}
+.header h1{font-size:16px;font-weight:700}.header .sub{font-size:11px;color:var(--text-2);display:block}
+.section{padding:12px 16px}
+.card{background:var(--bg-1);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}
+.card-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
+.badge-green{background:rgba(52,211,153,.15);color:var(--green)}.badge-red{background:rgba(248,113,113,.15);color:var(--red)}
+.badge-yellow{background:rgba(251,191,36,.15);color:var(--yellow)}.badge-blue{background:rgba(96,165,250,.15);color:var(--blue)}
+.badge-accent{background:rgba(232,168,56,.15);color:var(--accent)}
+.stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.stat-box{text-align:center;background:var(--bg-2);border-radius:10px;padding:10px 6px}
+.stat-box h3{font-size:22px;font-weight:800;margin-bottom:2px}.stat-box p{font-size:9px;color:var(--text-3)}
+.sess{display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--bg-2);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;font-size:12px}
+.sess .time{font-weight:700;color:var(--accent);min-width:55px}.sess .detail{flex:1;margin:0 8px}
+.sess .detail small{display:block;color:var(--text-2);font-size:10px}
+.btn{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg-3);color:var(--text-0);font-size:12px;cursor:pointer;font-family:var(--font)}
+.btn-accent{background:var(--accent);border-color:var(--accent);color:#000;font-weight:700}
+.btn-red{border-color:var(--red);color:var(--red)}.btn-sm{padding:4px 10px;font-size:10px}
+.tab-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--bg-1);border-top:1px solid var(--border);display:flex;z-index:10}
+.tab-bar button{flex:1;padding:10px 4px 8px;background:none;border:none;color:var(--text-3);font-size:9px;font-family:var(--font);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:.15s}
+.tab-bar button.active{color:var(--accent)}
+.tab-bar button .ico{font-size:18px}
+.empty{text-align:center;padding:24px;color:var(--text-3);font-size:12px}
+.form-group{margin-bottom:12px}.form-group label{display:block;font-size:11px;font-weight:600;color:var(--text-2);margin-bottom:4px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-2);color:var(--text-0);font-family:var(--font);font-size:13px}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--accent)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.login-wrap{padding:40px 24px;text-align:center}
+.login-wrap h2{font-size:22px;margin-bottom:4px}.login-wrap .sub{color:var(--text-2);font-size:13px;margin-bottom:24px;display:block}
+.tab-switch{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:20px}
+.tab-switch button{flex:1;padding:10px;background:none;border:none;color:var(--text-2);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer}
+.tab-switch button.active{background:var(--bg-3);color:var(--text-0)}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:var(--green);color:#000;padding:8px 20px;border-radius:8px;font-size:12px;font-weight:600;z-index:100;animation:fadeIn .3s}
+.toast.err{background:var(--red);color:#fff}
+@keyframes fadeIn{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}
+.progress-bar{height:8px;background:var(--bg-3);border-radius:4px;overflow:hidden;margin-top:4px}
+.progress-bar .fill{height:100%;border-radius:4px;transition:width .5s}
+.pay-row{display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg-2);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;font-size:12px}
+.modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:50;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal{background:var(--bg-1);border:1px solid var(--border);border-radius:14px;padding:20px;width:100%;max-width:380px}
+.modal h3{font-size:15px;font-weight:700;margin-bottom:12px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="tab-bar" id="tabs" style="display:none">
+  <button onclick="go('home')"><span class="ico">🏠</span>Home</button>
+  <button onclick="go('schedule')"><span class="ico">📅</span>Schedule</button>
+  <button onclick="go('progress')"><span class="ico">📊</span>Progress</button>
+  <button onclick="go('payments')"><span class="ico">💳</span>Payments</button>
+  <button onclick="go('profile')"><span class="ico">👤</span>Profile</button>
+</div>
+<script>
+const API='https://coach-api-1770519048.azurewebsites.net/api/v1';
+let CLIENT=null;let TAB='home';
+try{CLIENT=JSON.parse(localStorage.getItem('cf_client_user'))}catch{}
+const $=id=>document.getElementById(id);
+const h=s=>(s||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function toast(msg,ok=true){const t=document.createElement('div');t.className='toast'+(ok?'':' err');t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2500)}
+
+async function api(path,opts={}){
+  try{const r=await fetch(API+path,{...opts,headers:{'Content-Type':'application/json',...(opts.headers||{})}});return await r.json()}
+  catch(e){return{success:false,detail:'Connection error'}}
+}
+
+function go(tab){TAB=tab;render()}
+function render(){
+  if(!CLIENT){renderAuth();$('tabs').style.display='none';return}
+  $('tabs').style.display='flex';
+  document.querySelectorAll('.tab-bar button').forEach((b,i)=>{b.classList.toggle('active',['home','schedule','progress','payments','profile'][i]===TAB)});
+  ({home:renderHome,schedule:renderSchedule,progress:renderProgress,payments:renderPayments,profile:renderProfile}[TAB]||renderHome)();
+}
+
+// ─── AUTH ────────────────────────────
+let authTab='login';
+function renderAuth(){
+  $('app').innerHTML=`<div class="login-wrap">
+  <div style="font-size:32px;margin-bottom:8px">🏋️</div>
+  <h2>CoachFlow</h2><span class="sub">Your fitness journey, tracked</span>
+  <div class="tab-switch"><button class="${authTab==='login'?'active':''}" onclick="authTab='login';renderAuth()">Login</button><button class="${authTab==='register'?'active':''}" onclick="authTab='register';renderAuth()">Activate / Register</button></div>
+  ${authTab==='login'?`
+    <div class="form-group" style="text-align:left"><label>Email</label><input id="clE" type="email" placeholder="your@email.com"></div>
+    <div class="form-group" style="text-align:left"><label>Password</label><input id="clPw" type="password" placeholder="Your password"></div>
+    <div style="text-align:left;margin-bottom:8px"><details style="font-size:10px;color:var(--text-3)"><summary style="cursor:pointer">Login with phone instead?</summary><div class="form-group" style="margin-top:8px"><label>Phone (last 4 digits)</label><input id="clP" maxlength="4" placeholder="1234"></div></details></div>
+    <button class="btn btn-accent" style="width:100%;padding:12px" onclick="doLogin()" id="loginBtn">Login</button>
+    <p style="color:var(--text-3);font-size:10px;margin-top:12px">Don't have an account? <a href="#" onclick="authTab='register';renderAuth();return false" style="color:var(--accent)">Register here</a></p>
+  `:`
+    <div class="form-row"><div class="form-group" style="text-align:left"><label>Full Name *</label><input id="rgN" placeholder="Your name"></div><div class="form-group" style="text-align:left"><label>Phone</label><input id="rgP" placeholder="+91 98765 43210"></div></div>
+    <div class="form-group" style="text-align:left"><label>Email *</label><input id="rgE" type="email" placeholder="your@email.com"></div>
+    <div class="form-group" style="text-align:left"><label>Password *</label><input id="rgPw" type="password" placeholder="Min 6 characters"></div>
+    <div class="form-row"><div class="form-group" style="text-align:left"><label>Goal</label><select id="rgG"><option>Weight Loss</option><option>Muscle Gain</option><option>Fitness</option><option>Strength</option><option>Flexibility</option><option>Other</option></select></div><div class="form-group" style="text-align:left"><label>Training</label><select id="rgT"><option>Offline</option><option>Online</option></select></div></div>
+    <div class="form-row"><div class="form-group" style="text-align:left"><label>Weight (kg)</label><input id="rgW" type="number" step="0.1"></div><div class="form-group" style="text-align:left"><label>Height (cm)</label><input id="rgH" type="number"></div></div>
+    <div class="form-group" style="text-align:left"><label>Medical / Injuries</label><input id="rgI" placeholder="Any injuries or conditions"></div>
+    <p style="font-size:10px;color:var(--text-2);margin-bottom:12px;text-align:left">If your coach already added you, use the <strong>same email</strong> to activate your account and set a password.</p>
+    <button class="btn btn-accent" style="width:100%;padding:12px" onclick="doRegister()" id="regBtn">Activate / Create Account</button>
+    <p style="color:var(--text-3);font-size:10px;margin-top:12px">Already registered? <a href="#" onclick="authTab='login';renderAuth();return false" style="color:var(--accent)">Login here</a></p>
+  `}
+  </div>`;
+}
+
+async function doLogin(){
+  const e=$('clE').value,pw=$('clPw').value,p=$('clP')?.value||'';
+  if(!e)return toast('Enter email',false);
+  if(!pw&&!p)return toast('Enter password or phone digits',false);
+  $('loginBtn').textContent='Logging in...';$('loginBtn').disabled=true;
+  const d=await api('/auth/client-login',{method:'POST',body:JSON.stringify({email:e,password:pw,phone:p})});
+  if(d.success){CLIENT=d.client;localStorage.setItem('cf_client_user',JSON.stringify(CLIENT));toast('Welcome, '+(CLIENT.name||'')+'!');render()}
+  else{toast(d.detail||'Login failed',false);$('loginBtn').textContent='Login';$('loginBtn').disabled=false}
+}
+
+async function doRegister(){
+  const name=$('rgN').value,email=$('rgE').value,pw=$('rgPw').value;
+  if(!name||!email)return toast('Name and email required',false);
+  if(!pw||pw.length<6)return toast('Password must be 6+ characters',false);
+  $('regBtn').textContent='Creating...';$('regBtn').disabled=true;
+  const d=await api('/auth/client-register',{method:'POST',body:JSON.stringify({
+    name,email,phone:$('rgP').value,password:pw,goal:$('rgG').value,type:$('rgT').value,
+    weight:$('rgW').value,height:$('rgH').value,injuries:$('rgI').value
+  })});
+  if(d.success){CLIENT=d.client;localStorage.setItem('cf_client_user',JSON.stringify(CLIENT));toast(d.message||'Account created! Welcome!');render()}
+  else{toast(d.detail||'Registration failed',false);$('regBtn').textContent='Activate / Create Account';$('regBtn').disabled=false}
+}
+
+// ─── HOME ────────────────────────────
+async function renderHome(){
+  $('app').innerHTML=`<div class="header"><div><h1>Welcome, ${h((CLIENT.name||'').split(' ')[0])}</h1><span class="sub">${new Date().toLocaleDateString('en-IN',{weekday:'long',month:'long',day:'numeric'})}</span></div><button class="btn btn-sm" onclick="doLogout()">Logout</button></div><div class="section"><div style="text-align:center;padding:40px;color:var(--text-3)">Loading...</div></div>`;
+  const d=await api('/client/'+CLIENT.id+'/dashboard');
+  if(!d.success)return $('app').querySelector('.section').innerHTML='<div class="empty">Could not load. Check connection.</div>';
+  const st=d.stats||{};const up=d.upcoming||[];const wks=d.workouts||[];
+  $('app').innerHTML=`<div class="header"><div><h1>Welcome, ${h((CLIENT.name||'').split(' ')[0])}</h1><span class="sub">${d.coach_name?'Coach: '+h(d.coach_name)+' · ':''}${new Date().toLocaleDateString('en-IN',{weekday:'long',month:'long',day:'numeric'})}</span></div><button class="btn btn-sm" onclick="doLogout()">Logout</button></div>
+  <div class="section">
+    <div class="stat-row">
+      <div class="stat-box"><h3 style="color:var(--accent)">${st.upcoming_count||0}</h3><p>Upcoming</p></div>
+      <div class="stat-box"><h3 style="color:var(--green)">${st.rate||0}%</h3><p>Attendance</p></div>
+      <div class="stat-box"><h3 style="color:var(--blue)">${st.attended||0}</h3><p>Attended</p></div>
+    </div>
+    <div class="card"><div class="card-title">Attendance Rate</div>
+      <div class="progress-bar"><div class="fill" style="width:${st.rate||0}%;background:${(st.rate||0)>=75?'var(--green)':(st.rate||0)>=50?'var(--yellow)':'var(--red)'}"></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:var(--text-3)"><span>${st.attended||0} attended</span><span>${st.absent||0} absent</span></div>
+    </div>
+    <div class="card"><div class="card-title">Upcoming Sessions</div>
+    ${up.length?up.slice(0,5).map(s=>{
+      const dt=s.scheduled_at||'';const dd=dt.slice(0,10);const t=dt.slice(11,16);
+      const canCancel=s.status==='scheduled';const isPending=s.status==='cancel_requested';
+      return`<div class="sess"><div class="time">${t||'--:--'}</div><div class="detail"><strong>${fmtDate(dd)}</strong><small>${s.workout_name||'Session'} · ${s.duration_minutes||60}min · ${s.location||'offline'}</small></div>${isPending?'<span class="badge badge-yellow">Cancel Pending</span>':canCancel?'<button class="btn btn-sm btn-red" onclick="requestCancel(\''+s.id+'\')">Cancel</button>':'<span class="badge badge-accent">'+h(s.status)+'</span>'}</div>`
+    }).join(''):'<div class="empty">No upcoming sessions</div>'}
+    </div>
+    ${wks.length?`<div class="card"><div class="card-title">My Workouts</div>${wks.map(w=>'<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)"><span style="font-size:14px">💪</span><div><strong style="font-size:12px">'+h(w.name||'')+'</strong>'+(w.category?'<br><span style="font-size:10px;color:var(--text-2)">'+h(w.category)+'</span>':'')+'</div></div>').join('')}</div>`:''}
+  </div>`;
+}
+
+// ─── SCHEDULE ────────────────────────
+let schedTab='upcoming';
+async function renderSchedule(){
+  $('app').innerHTML=`<div class="header"><h1>My Schedule</h1></div><div class="section"><div style="text-align:center;padding:40px;color:var(--text-3)">Loading...</div></div>`;
+  const d=await api('/client/'+CLIENT.id+'/dashboard');
+  const up=d.upcoming||[];const past=d.past||[];
+  $('app').innerHTML=`<div class="header"><h1>My Schedule</h1></div>
+  <div class="section">
+    <div class="tab-switch" style="margin-bottom:14px"><button class="${schedTab==='upcoming'?'active':''}" onclick="schedTab='upcoming';renderSchedule()">Upcoming (${up.length})</button><button class="${schedTab==='past'?'active':''}" onclick="schedTab='past';renderSchedule()">History (${past.length})</button></div>
+    ${schedTab==='upcoming'?
+      (up.length?up.map(s=>{
+        const dt=s.scheduled_at||'';const dd=dt.slice(0,10);const t=dt.slice(11,16);
+        const canCancel=s.status==='scheduled';const isPending=s.status==='cancel_requested';
+        return`<div class="sess"><div class="time">${t||'--:--'}</div><div class="detail"><strong>${fmtDate(dd)}</strong><small>${s.workout_name||'Session'} · ${s.duration_minutes||60}min</small></div>${isPending?'<span class="badge badge-yellow">Cancel Pending</span>':canCancel?'<button class="btn btn-sm btn-red" onclick="requestCancel(\''+s.id+'\')">Cancel</button>':'<span class="badge badge-accent">'+h(s.status)+'</span>'}</div>`
+      }).join(''):'<div class="empty">No upcoming sessions</div>')
+    :
+      (past.length?past.map(s=>{
+        const dt=s.scheduled_at||'';const dd=dt.slice(0,10);const t=dt.slice(11,16);
+        const attended=s.status==='confirmed'||s.status==='completed';const absent=s.status==='no_show';const cancelled=s.status==='cancelled';
+        const badge=attended?'badge-green':absent?'badge-red':cancelled?'badge-yellow':'badge-blue';
+        const label=attended?'✓ Present':absent?'✗ Absent':cancelled?'Cancelled':s.status;
+        return`<div class="sess"><div class="time">${t||'--:--'}</div><div class="detail"><strong>${fmtDate(dd)}</strong><small>${s.workout_name||'Session'} · ${s.duration_minutes||60}min</small></div><span class="badge ${badge}">${label}</span></div>`
+      }).join(''):'<div class="empty">No past sessions</div>')
+    }
+  </div>`;
+}
+
+// ─── PROGRESS ────────────────────────
+async function renderProgress(){
+  $('app').innerHTML=`<div class="header"><h1>My Progress</h1></div><div class="section"><div style="text-align:center;padding:40px;color:var(--text-3)">Loading...</div></div>`;
+  const d=await api('/progress/'+CLIENT.id);
+  const records=(d.records||[]).map(r=>{r.metrics=typeof r.metrics==='string'?JSON.parse(r.metrics):r.metrics||{};return r});
+  if(!records.length){$('app').innerHTML=`<div class="header"><h1>My Progress</h1></div><div class="section"><div class="empty">No progress records yet.<br>Ask your coach to record your measurements.</div></div>`;return}
+
+  // Extract all trackable parameters from records (chronological order)
+  const sorted=[...records].reverse();
+  function extract(key,isMeas){
+    return sorted.map(r=>{
+      const v=isMeas?(r.metrics.measurements||{})[key]:r.metrics[key];
+      return v?{val:parseFloat(v),date:(r.recorded_at||'').slice(0,10)}:null;
+    }).filter(Boolean);
+  }
+
+  // Parameters: weight goes down = good, body fat goes down = good, measurements depend
+  const params=[];
+  // Weight
+  const wData=extract('weight',false);
+  if(wData.length) params.push({name:'Weight',unit:'kg',data:wData,lowerBetter:true});
+  // Body fat
+  const bfData=extract('Body Fat %',true);
+  if(bfData.length) params.push({name:'Body Fat',unit:'%',data:bfData,lowerBetter:true});
+  // Measurement keys - waist lower is better, chest/bicep/thigh higher can be better (muscle gain)
+  const measKeys=[
+    {key:'Chest',unit:'cm',lowerBetter:false},{key:'Waist',unit:'cm',lowerBetter:true},
+    {key:'Hips',unit:'cm',lowerBetter:true},{key:'Bicep L',unit:'cm',lowerBetter:false},
+    {key:'Bicep R',unit:'cm',lowerBetter:false},{key:'Thigh',unit:'cm',lowerBetter:false},
+    {key:'Calf',unit:'cm',lowerBetter:false},{key:'Forearm',unit:'cm',lowerBetter:false}
+  ];
+  measKeys.forEach(mk=>{
+    const data=extract(mk.key,true);
+    if(data.length) params.push({name:mk.key,unit:mk.unit,data:data,lowerBetter:mk.lowerBetter});
+  });
+
+  // Build chart for each parameter
+  function buildChart(p){
+    const data=p.data;const n=data.length;
+    if(n<1) return '';
+    const vals=data.map(d=>d.val);
+    const minV=Math.min(...vals);const maxV=Math.max(...vals);const range=maxV-minV||1;
+    const first=vals[0];const last=vals[n-1];
+    const diff=last-first;const pctChange=first?((diff/first)*100).toFixed(1):0;
+    // Determine improvement
+    let status,statusColor,statusIcon,statusLabel;
+    const threshold=0.5; // minimum % change to count
+    if(Math.abs(pctChange)<threshold){status='same';statusColor='var(--yellow)';statusIcon='→';statusLabel='No Change'}
+    else if((p.lowerBetter&&diff<0)||(!p.lowerBetter&&diff>0)){status='improved';statusColor='var(--green)';statusIcon='↑';statusLabel='Improved'}
+    else{status='decline';statusColor='var(--red)';statusIcon='↓';statusLabel='Needs Work'}
+
+    // SVG line chart
+    const w=280;const ht=80;const pad=4;
+    const chartW=w-pad*2;const chartH=ht-pad*2;
+    const points=data.map((d,i)=>{
+      const x=pad+(n>1?(i/(n-1))*chartW:chartW/2);
+      const y=pad+chartH-(((d.val-minV)/range)*chartH);
+      return{x,y,val:d.val,date:d.date};
+    });
+    const pathD=points.map((pt,i)=>(i===0?'M':'L')+pt.x.toFixed(1)+','+pt.y.toFixed(1)).join(' ');
+    const areaD=pathD+' L'+points[points.length-1].x.toFixed(1)+','+(ht-pad)+' L'+points[0].x.toFixed(1)+','+(ht-pad)+' Z';
+    const dots=points.map(pt=>'<circle cx="'+pt.x.toFixed(1)+'" cy="'+pt.y.toFixed(1)+'" r="2.5" fill="'+statusColor+'" />').join('');
+
+    return `<div class="card" style="padding:12px;margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div><strong style="font-size:13px">${p.name}</strong><span style="font-size:10px;color:var(--text-3);margin-left:4px">(${p.unit})</span></div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:18px;font-weight:800;color:var(--text-0)">${last}${p.unit}</span>
+          <span style="background:${statusColor}22;color:${statusColor};padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700">${statusIcon} ${statusLabel}</span>
+        </div>
+      </div>
+      ${n>1?`<svg viewBox="0 0 ${w} ${ht}" style="width:100%;height:80px;display:block">
+        <defs><linearGradient id="g_${p.name.replace(/\s/g,'')}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${statusColor}" stop-opacity="0.3"/><stop offset="100%" stop-color="${statusColor}" stop-opacity="0.02"/></linearGradient></defs>
+        <path d="${areaD}" fill="url(#g_${p.name.replace(/\s/g,'')})" />
+        <path d="${pathD}" fill="none" stroke="${statusColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        ${dots}
+      </svg>
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-3);margin-top:2px"><span>${data[0].date.slice(5)}</span><span>${data[n-1].date.slice(5)}</span></div>`
+      :'<div style="text-align:center;font-size:10px;color:var(--text-3);padding:10px">Only 1 record — chart needs 2+ entries</div>'}
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-2);margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">
+        <span>Start: <strong>${first}${p.unit}</strong></span>
+        <span>Change: <strong style="color:${statusColor}">${diff>0?'+':''}${diff.toFixed(1)}${p.unit} (${pctChange>0?'+':''}${pctChange}%)</strong></span>
+        <span>Latest: <strong>${last}${p.unit}</strong></span>
+      </div>
+    </div>`;
+  }
+
+  // Summary cards
+  const improved=params.filter(p=>{const d=p.data;const diff=d[d.length-1].val-d[0].val;const pct=d[0].val?Math.abs((diff/d[0].val)*100):0;return pct>=0.5&&((p.lowerBetter&&diff<0)||(!p.lowerBetter&&diff>0))}).length;
+  const needsWork=params.filter(p=>{const d=p.data;const diff=d[d.length-1].val-d[0].val;const pct=d[0].val?Math.abs((diff/d[0].val)*100):0;return pct>=0.5&&((p.lowerBetter&&diff>0)||(!p.lowerBetter&&diff<0))}).length;
+  const noChange=params.length-improved-needsWork;
+
+  $('app').innerHTML=`<div class="header"><h1>My Progress</h1><span style="font-size:10px;color:var(--text-2)">${records.length} records</span></div>
+  <div class="section">
+    <div class="stat-row">
+      <div class="stat-box"><h3 style="color:var(--green)">${improved}</h3><p>Improved</p></div>
+      <div class="stat-box"><h3 style="color:var(--yellow)">${noChange}</h3><p>No Change</p></div>
+      <div class="stat-box"><h3 style="color:var(--red)">${needsWork}</h3><p>Needs Work</p></div>
+    </div>
+    ${params.map(buildChart).join('')}
+    <div class="card"><div class="card-title">All Records</div>
+    ${records.map(r=>{
+      const m=r.metrics;const meas=m.measurements||{};
+      return`<div style="padding:8px;background:var(--bg-2);border-radius:8px;margin-bottom:6px;font-size:11px">
+        <div style="display:flex;justify-content:space-between"><strong>${(r.recorded_at||'').slice(0,10)}</strong></div>
+        ${m.weight?'<div style="margin-top:4px">⚖ <strong>'+m.weight+'kg</strong></div>':''}
+        ${Object.keys(meas).length?'<div style="margin-top:4px;color:var(--text-2)">📏 '+Object.entries(meas).filter(([k,v])=>v).map(([k,v])=>k+': '+v).join(' · ')+'</div>':''}
+        ${r.notes?'<div style="margin-top:4px;color:var(--text-3)">📝 '+h(r.notes)+'</div>':''}
+      </div>`
+    }).join('')}
+    </div>
+  </div>`;
+}
+
+// ─── PAYMENTS ────────────────────────
+async function renderPayments(){
+  $('app').innerHTML=`<div class="header"><h1>Payments</h1></div><div class="section"><div style="text-align:center;padding:40px;color:var(--text-3)">Loading...</div></div>`;
+  const d=await api('/client/'+CLIENT.id+'/payments');
+  const pays=d.payments||[];
+  $('app').innerHTML=`<div class="header"><h1>Payments</h1></div>
+  <div class="section">
+    <div class="card"><div class="card-title">Payment History (${pays.length})</div>
+    ${pays.length?pays.map(p=>{
+      const st=p.status==='paid'?'badge-green':p.status==='pending'?'badge-yellow':'badge-red';
+      return`<div class="pay-row"><div><strong>₹${p.amount||0}</strong><br><small style="color:var(--text-3)">${(p.created_at||'').slice(0,10)}</small></div><div style="text-align:right"><span class="badge ${st}">${p.status||'pending'}</span>${p.description?'<br><small style="color:var(--text-2)">'+h(p.description)+'</small>':''}</div></div>`
+    }).join(''):'<div class="empty">No payments recorded yet.</div>'}
+    </div>
+  </div>`;
+}
+
+// ─── PROFILE ─────────────────────────
+function renderProfile(){
+  const m=typeof CLIENT.metadata==='string'?JSON.parse(CLIENT.metadata):CLIENT.metadata||{};
+  $('app').innerHTML=`<div class="header"><h1>My Profile</h1></div>
+  <div class="section">
+    <div class="card" style="text-align:center;padding:20px">
+      <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--yellow));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#000;margin:0 auto 8px">${(CLIENT.name||'?')[0]}</div>
+      <h3 style="font-size:16px">${h(CLIENT.name)}</h3>
+      <div style="font-size:11px;color:var(--text-2);margin-top:2px">${h(CLIENT.email||'')}${CLIENT.phone?' · '+h(CLIENT.phone):''}</div>
+    </div>
+    <div class="card"><div class="card-title">My Details</div>
+      <div style="font-size:12px;display:grid;gap:8px">
+        ${m.goal?'<div><span style="color:var(--text-3)">Goal:</span> <strong>'+h(m.goal)+'</strong></div>':''}
+        ${m.type?'<div><span style="color:var(--text-3)">Training:</span> <strong>'+h(m.type)+'</strong></div>':''}
+        ${m.weight?'<div><span style="color:var(--text-3)">Weight:</span> <strong>'+m.weight+'kg</strong></div>':''}
+        ${m.height?'<div><span style="color:var(--text-3)">Height:</span> <strong>'+m.height+'cm</strong></div>':''}
+        ${m.injuries?'<div><span style="color:var(--text-3)">Medical:</span> <span style="color:var(--red)">'+h(m.injuries)+'</span></div>':''}
+        ${m.diet?'<div><span style="color:var(--text-3)">Diet:</span> '+h(m.diet)+'</div>':''}
+      </div>
+    </div>
+    <button class="btn btn-red" style="width:100%;margin-top:10px" onclick="doLogout()">Logout</button>
+  </div>`;
+}
+
+// ─── HELPERS ─────────────────────────
+function fmtDate(d){if(!d)return'';const p=d.split('-');const months=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return months[parseInt(p[1])]+' '+parseInt(p[2])+', '+p[0]}
+
+function requestCancel(sid){
+  document.body.insertAdjacentHTML('beforeend',`<div class="modal-bg" id="cancelModal" onclick="if(event.target===this)this.remove()"><div class="modal">
+    <h3>Request Cancellation</h3>
+    <p style="font-size:12px;color:var(--text-2);margin-bottom:12px">Your coach will review this request. The session stays scheduled until they approve.</p>
+    <div class="form-group"><label>Reason</label><textarea id="cancelReason" rows="3" placeholder="Why do you need to cancel?"></textarea></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="document.getElementById('cancelModal').remove()">Back</button><button class="btn btn-red" onclick="submitCancel('${sid}')">Request Cancel</button></div>
+  </div></div>`);
+}
+async function submitCancel(sid){
+  const reason=$('cancelReason')?.value||'No reason given';
+  const d=await api('/sessions/'+sid+'/cancel-request',{method:'POST',body:JSON.stringify({reason})});
+  document.getElementById('cancelModal')?.remove();
+  if(d.success){toast('Cancel request sent to coach');render()}
+  else toast(d.detail||'Error',false);
+}
+function doLogout(){localStorage.removeItem('cf_client_user');CLIENT=null;render()}
+
+// ─── INIT ────────────────────────────
+render();
+</script>
+</body>
+</html>
